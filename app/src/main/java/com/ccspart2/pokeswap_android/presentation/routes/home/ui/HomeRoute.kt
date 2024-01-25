@@ -1,4 +1,4 @@
-package com.ccspart2.pokeswap_android.presentation.routes.home
+package com.ccspart2.pokeswap_android.presentation.routes.home.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,17 +24,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ccspart2.pokeswap_android.R
 import com.ccspart2.pokeswap_android.presentation.core.ui.PreviewScreen
-import com.ccspart2.pokeswap_android.presentation.routes.home.components.PokedexTopBar
+import com.ccspart2.pokeswap_android.presentation.routes.home.ui.components.PokedexTopBar
+import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeState
+import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HomeRoute() {
-    HomeScreen()
+    val viewModel: HomeViewModel = hiltViewModel()
+    HomeScreen(
+        viewModelState = viewModel.viewState,
+    )
 }
 
 @Composable
-private fun HomeScreen() {
+private fun HomeScreen(
+    viewModelState: StateFlow<HomeState>,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +67,7 @@ private fun HomeScreen() {
                 .background(Color.White),
         ) {
             Text(
-                text = "Choose your favorite Pokemon",
+                text = "Choose your Favorite Pokemon",
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -108,6 +118,11 @@ private fun HomeScreen() {
 @Composable
 private fun HomePreview() {
     PreviewScreen {
-        HomeScreen()
+        HomeScreen(
+            viewModelState =
+            MutableStateFlow(
+                HomeState(),
+            ),
+        )
     }
 }

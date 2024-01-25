@@ -1,4 +1,4 @@
-package com.ccspart2.pokeswap_android.presentation.routes.home.components
+package com.ccspart2.pokeswap_android.presentation.routes.home.ui.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
