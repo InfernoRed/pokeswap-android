@@ -65,3 +65,5 @@ val md_theme_dark_outlineVariant = Color(0xFF534342)
 val md_theme_dark_scrim = Color(0xFF000000)
 
 val seed = Color(0xFFB11A20)
+
+val pokedex_len_color = Color(0xFF32acfb)

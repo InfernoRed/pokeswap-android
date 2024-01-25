@@ -15,7 +15,7 @@ fun PokemonSwapNavHost() {
         startDestination = NavigationItem.Home.route,
     ) {
         composable(route = NavigationItem.Home.route) {
-            HomeRoute(navController = navController)
+            HomeRoute()
         }
     }
 }

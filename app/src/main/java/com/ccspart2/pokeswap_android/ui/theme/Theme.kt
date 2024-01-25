@@ -75,14 +75,14 @@ fun PokeSwapAndroidTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colors = if (!useDarkTheme) {
-        LightColors
-    } else {
-        DarkColors
-    }
+//    val colors = if (!useDarkTheme) {
+//        LightColors
+//    } else {
+//        DarkColors
+//    }
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = LightColors,
         typography = Typography,
         content = content,
     )
