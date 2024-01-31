@@ -2,7 +2,6 @@ package com.ccspart2.pokeswap_android.presentation.routes.home.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,16 +22,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
 import com.ccspart2.pokeswap_android.R
 import com.ccspart2.pokeswap_android.presentation.core.ui.PreviewScreen
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.FilledButton
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.LoadingDialog
 import com.ccspart2.pokeswap_android.presentation.routes.home.ui.components.PokedexTopBar
+import com.ccspart2.pokeswap_android.presentation.routes.home.ui.components.PokemonCardDisplay
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeEvent
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeState
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeViewModel
@@ -45,10 +45,10 @@ fun HomeRoute() {
     HomeScreen(
         viewModelState = viewModel.viewState,
         onLeftCardButtonClick = {
-            viewModel.handleEvent(HomeEvent.RandomizeLeftCard)
+            viewModel.handleEvent(HomeEvent.RandomizeRightCard)
         },
         onRightButtonClick = {
-            viewModel.handleEvent(HomeEvent.RandomizeRightCard)
+            viewModel.handleEvent(HomeEvent.RandomizeLeftCard)
         },
     )
 }
@@ -104,52 +104,32 @@ private fun HomeScreen(
                         ),
                 )
                 Spacer(modifier = Modifier.height(30.dp))
+
                 Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
-                    Text(text = viewState.leftDisplayedPokemon.name)
-                    Text(text = "VS")
-                    Text(text = viewState.rightDisplayedPokemon.name)
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Image(
-                        painter = rememberImagePainter(
-                            data = viewState.leftDisplayedPokemon.images?.large,
-                            builder = {
-                                // Optional: Add image transformations
-                                placeholder(R.drawable.pokemon_card_backside)
-                                error(R.drawable.pokemon_card_backside)
-                            },
-                        ),
-                        contentDescription = "Coil Image",
-                        modifier = Modifier
-                            .size(180.dp)
-                            .clickable {
-                                onLeftCardButtonClick()
-                            },
+                    PokemonCardDisplay(
+                        pokemonCardName = viewState.leftDisplayedPokemon.name,
+                        imageResourceUrl = viewState.leftDisplayedPokemon.images?.large,
+                        flavorText = viewState.leftDisplayedPokemon.flavorText,
+                        onImageClick = onLeftCardButtonClick,
                     )
+
                     Image(
-                        painter = rememberImagePainter(
-                            data = viewState.rightDisplayedPokemon.images?.large,
-                            builder = {
-                                // Optional: Add image transformations
-                                placeholder(R.drawable.pokemon_card_backside)
-                                error(R.drawable.pokemon_card_backside)
-                            },
-                        ),
-                        contentDescription = "Coil Image",
+                        painter = painterResource(id = R.drawable.versus_logo),
+                        contentDescription = "",
                         modifier = Modifier
-                            .size(180.dp)
-                            .clickable {
-                                onRightButtonClick()
-                            },
+                            .padding(top = 100.dp)
+                            .size(50.dp),
+                    )
+
+                    PokemonCardDisplay(
+                        pokemonCardName = viewState.rightDisplayedPokemon.name,
+                        imageResourceUrl = viewState.rightDisplayedPokemon.images?.large,
+                        flavorText = viewState.rightDisplayedPokemon.flavorText,
+                        onImageClick = onRightButtonClick,
                     )
                 }
             }
