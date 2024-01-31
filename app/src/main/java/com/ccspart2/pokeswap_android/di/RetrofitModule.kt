@@ -1,5 +1,6 @@
 package com.ccspart2.pokeswap_android.di
 
+import com.ccspart2.pokeswap_android.data.localData.PokemonDatabase
 import com.ccspart2.pokeswap_android.network.common.Constants
 import com.ccspart2.pokeswap_android.network.data.PokemonApi
 import com.ccspart2.pokeswap_android.network.data.PokemonService
@@ -41,8 +42,9 @@ object RetrofitModule {
     @ViewModelScoped
     fun providePokemonRepository(
         pokemonService: PokemonService,
+        db: PokemonDatabase,
     ): PokemonRepository {
-        return PokemonRepository(pokemonService)
+        return PokemonRepository(pokemonService, db)
     }
 
     @Provides

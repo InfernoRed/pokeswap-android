@@ -20,25 +20,40 @@ constructor(
     val viewState = _viewState.asStateFlow()
 
     init {
+
         getAllPokemon()
     }
 
     private fun getAllPokemon() {
         viewModelScope.launch {
             try {
-                val pokemon = pokemonUseCase()
-                _viewState.update { state ->
-                    state.copy(
-                        pokemonList = pokemon,
-                        currentlyDisplayedImageUrl = pokemon?.data?.first()?.images?.large,
-                        pokemonCount = pokemon?.count ?: 0,
-                    )
-                }
-                pokemon?.data?.forEach {
-                    LogUtils.info(it.name)
+                pokemonUseCase.getLocalPokemonData().collect { pokemonLocalList ->
+                    if (pokemonLocalList.isEmpty()) {
+                        val pokemonNetworkList = pokemonUseCase()
+                        pokemonNetworkList?.data?.let {
+                            _viewState.update { state ->
+                                state.copy(
+                                    pokemonList = it,
+                                    currentlyDisplayedImageUrl = it.first().images?.large,
+                                    pokemonCount = pokemonNetworkList.totalCount,
+                                )
+                            }
+                        }
+
+                        pokemonNetworkList?.data?.forEach {
+                            LogUtils.info(it.name)
+                        }
+                    } else {
+                        _viewState.update { state ->
+                            state.copy(
+                                pokemonList = pokemonLocalList,
+                                currentlyDisplayedImageUrl = pokemonLocalList.first().images?.large,
+                            )
+                        }
+                    }
                 }
             } catch (e: Exception) {
-                LogUtils.error("No se pudo Conectar = ${e.message}")
+                LogUtils.error("App Connection Exception = ${e.message}")
             }
         }
     }

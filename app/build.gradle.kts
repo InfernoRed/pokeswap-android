@@ -53,6 +53,15 @@ android {
 
 dependencies {
 
+    val room_version = "2.6.1"
+
+    // Room Database
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    //noinspection KaptUsageInsteadOfKsp
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
@@ -76,6 +85,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
     // Dagger - Hilt
+    //noinspection GradleDependency
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
