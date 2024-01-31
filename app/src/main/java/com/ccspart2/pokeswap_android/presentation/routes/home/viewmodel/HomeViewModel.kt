@@ -2,6 +2,7 @@ package com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ccspart2.pokeswap_android.data.model.Pokemon
 import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
 import com.ccspart2.pokeswap_android.utils.LogUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,19 +33,54 @@ constructor(
     }
 
     private fun updateRightCard() {
-        _viewState.update { state ->
-            state.copy(
-                rightDisplayedPokemon = state.pokemonList.random(),
-            )
+        val currentPokemonList = viewState.value.pokemonList.toMutableList()
+
+        if (currentPokemonList.size > 2) {
+            currentPokemonList.remove(viewState.value.rightDisplayedPokemon)
+            LogUtils.info("The current Pokemon list is: ${currentPokemonList.size} ")
+
+            _viewState.update { state ->
+                state.copy(
+                    pokemonList = currentPokemonList,
+                    rightDisplayedPokemon = randomPokemonCard(
+                        state.leftDisplayedPokemon,
+                        currentPokemonList,
+                    ),
+                )
+            }
+        } else {
+            LogUtils.info("The list is too short, no more removals")
+            // TODO Show Alert Dialog to showcase the Favorite Pokemon
         }
     }
 
     private fun updateLeftCard() {
-        _viewState.update { state ->
-            state.copy(
-                leftDisplayedPokemon = state.pokemonList.random(),
-            )
+        val currentPokemonList = viewState.value.pokemonList.toMutableList()
+
+        if (currentPokemonList.size > 2) {
+            currentPokemonList.remove(viewState.value.leftDisplayedPokemon)
+            LogUtils.info("The current Pokemon list is: ${currentPokemonList.size} ")
+
+            _viewState.update { state ->
+                state.copy(
+                    pokemonList = currentPokemonList,
+                    leftDisplayedPokemon = randomPokemonCard(
+                        state.rightDisplayedPokemon,
+                        currentPokemonList,
+                    ),
+                )
+            }
+        } else {
+            LogUtils.info("The list is too short, no more removals")
         }
+    }
+
+    private fun randomPokemonCard(
+        otherPokemonDisplayed: Pokemon,
+        currentPokemonList: List<Pokemon>,
+    ): Pokemon {
+        val filteredList = currentPokemonList.filter { it != otherPokemonDisplayed }
+        return filteredList.random()
     }
 
     private fun getAllPokemon() {
