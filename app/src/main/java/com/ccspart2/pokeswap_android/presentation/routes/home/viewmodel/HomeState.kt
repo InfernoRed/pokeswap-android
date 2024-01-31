@@ -4,6 +4,8 @@ import com.ccspart2.pokeswap_android.data.model.Pokemon
 
 data class HomeState(
     val pokemonList: List<Pokemon> = listOf(),
-    val currentlyDisplayedImageUrl: String? = null,
+    val leftDisplayedPokemon: Pokemon = Pokemon(),
+    val rightDisplayedPokemon: Pokemon = Pokemon(),
     val pokemonCount: Int = 0,
+    val isLoading: Boolean = true,
 )

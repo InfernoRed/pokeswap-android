@@ -54,6 +54,10 @@ android {
 dependencies {
 
     val room_version = "2.6.1"
+    val coroutines_version = "1.7.3"
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:1.4.0")
 
     // Room Database
     implementation("androidx.room:room-runtime:$room_version")
@@ -63,8 +67,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

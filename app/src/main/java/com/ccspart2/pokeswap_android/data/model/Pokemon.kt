@@ -9,4 +9,7 @@ data class Pokemon(
     @PrimaryKey var id: String = "",
     @Embedded var images: Images? = null,
     var name: String = "",
+    var rarity: String = "",
+    var flavorText: String = "",
+    val evolvesFrom: String? = null,
 )

@@ -84,6 +84,7 @@ fun PokeSwapAndroidTheme(
     MaterialTheme(
         colorScheme = LightColors,
         typography = Typography,
+        shapes = Shapes,
         content = content,
     )
 }

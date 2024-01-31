@@ -24,6 +24,29 @@ constructor(
         getAllPokemon()
     }
 
+    fun handleEvent(event: HomeEvent) {
+        when (event) {
+            HomeEvent.RandomizeLeftCard -> updateLeftCard()
+            HomeEvent.RandomizeRightCard -> updateRightCard()
+        }
+    }
+
+    private fun updateRightCard() {
+        _viewState.update { state ->
+            state.copy(
+                rightDisplayedPokemon = state.pokemonList.random(),
+            )
+        }
+    }
+
+    private fun updateLeftCard() {
+        _viewState.update { state ->
+            state.copy(
+                leftDisplayedPokemon = state.pokemonList.random(),
+            )
+        }
+    }
+
     private fun getAllPokemon() {
         viewModelScope.launch {
             try {
@@ -34,8 +57,10 @@ constructor(
                             _viewState.update { state ->
                                 state.copy(
                                     pokemonList = it,
-                                    currentlyDisplayedImageUrl = it.first().images?.large,
+                                    leftDisplayedPokemon = it.random(),
+                                    rightDisplayedPokemon = it.random(),
                                     pokemonCount = pokemonNetworkList.totalCount,
+                                    isLoading = false,
                                 )
                             }
                         }
@@ -47,7 +72,9 @@ constructor(
                         _viewState.update { state ->
                             state.copy(
                                 pokemonList = pokemonLocalList,
-                                currentlyDisplayedImageUrl = pokemonLocalList.first().images?.large,
+                                leftDisplayedPokemon = pokemonLocalList.random(),
+                                rightDisplayedPokemon = pokemonLocalList.random(),
+                                isLoading = false,
                             )
                         }
                     }
