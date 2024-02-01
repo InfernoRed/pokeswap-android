@@ -12,4 +12,5 @@ data class Pokemon(
     var rarity: String = "",
     var flavorText: String = "",
     val evolvesFrom: String? = null,
+    @Embedded val cardmarket: CardmarketInfo = CardmarketInfo(),
 )
