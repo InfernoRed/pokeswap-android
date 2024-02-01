@@ -49,8 +49,12 @@ constructor(
                 )
             }
         } else {
-            LogUtils.info("The list is too short, no more removals")
-            // TODO Show Alert Dialog to showcase the Favorite Pokemon
+            _viewState.update { state ->
+                state.copy(
+                    favPokemon = state.leftDisplayedPokemon,
+                    favPokemonSelected = true,
+                )
+            }
         }
     }
 
@@ -71,7 +75,12 @@ constructor(
                 )
             }
         } else {
-            LogUtils.info("The list is too short, no more removals")
+            _viewState.update { state ->
+                state.copy(
+                    favPokemon = state.rightDisplayedPokemon,
+                    favPokemonSelected = true,
+                )
+            }
         }
     }
 

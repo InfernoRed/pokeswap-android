@@ -31,6 +31,7 @@ import com.ccspart2.pokeswap_android.R
 import com.ccspart2.pokeswap_android.presentation.core.ui.PreviewScreen
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.FilledButton
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.LoadingDialog
+import com.ccspart2.pokeswap_android.presentation.routes.home.ui.components.ChosenCardDialog
 import com.ccspart2.pokeswap_android.presentation.routes.home.ui.components.PokedexTopBar
 import com.ccspart2.pokeswap_android.presentation.routes.home.ui.components.PokemonCardDisplay
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeEvent
@@ -82,6 +83,18 @@ private fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 LoadingDialog()
+            }
+        } else if (viewState.favPokemonSelected) {
+            viewState.favPokemon?.let { selectedFavoritePokemon ->
+                ChosenCardDialog(
+                    pokemonCardName = selectedFavoritePokemon.name,
+                    imageResourceUrl = selectedFavoritePokemon.images?.large,
+                    rarity = selectedFavoritePokemon.rarity,
+                    avgMarketPrice = selectedFavoritePokemon.cardmarket.prices.averageSellPrice,
+                    onClose = {
+                        // TODO: Add actions to main menu when the favorite is selected.
+                    },
+                )
             }
         } else {
             Column(
