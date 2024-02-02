@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">pokeswap-android</string>
+    <string name="app_name">PokeSwap</string>
     <string name="loading_component_label">Loading</string>
 </resources>
