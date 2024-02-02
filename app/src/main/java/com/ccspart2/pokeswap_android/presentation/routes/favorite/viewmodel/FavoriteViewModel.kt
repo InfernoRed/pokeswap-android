@@ -2,6 +2,8 @@ package com.ccspart2.pokeswap_android.presentation.routes.favorite.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ccspart2.pokeswap_android.data.localData.dataStore.DataStoreManager
+import com.ccspart2.pokeswap_android.data.localData.dataStore.UserPreferences
 import com.ccspart2.pokeswap_android.data.model.Pokemon
 import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
 import com.ccspart2.pokeswap_android.utils.LogUtils
@@ -16,6 +18,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject
 constructor(
     private val pokemonUseCase: GetAllPokemonUseCase,
+    private val dataStoreManager: DataStoreManager,
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(FavoriteState())
     val viewState = _viewState.asStateFlow()
@@ -49,12 +52,7 @@ constructor(
                 )
             }
         } else {
-            _viewState.update { state ->
-                state.copy(
-                    favPokemon = state.leftDisplayedPokemon,
-                    favPokemonSelected = true,
-                )
-            }
+            saveFavoritePokemonCard(viewState.value.leftDisplayedPokemon)
         }
     }
 
@@ -75,12 +73,23 @@ constructor(
                 )
             }
         } else {
-            _viewState.update { state ->
-                state.copy(
-                    favPokemon = state.rightDisplayedPokemon,
-                    favPokemonSelected = true,
-                )
-            }
+            saveFavoritePokemonCard(viewState.value.rightDisplayedPokemon)
+        }
+    }
+
+    private fun saveFavoritePokemonCard(favoritePokemon: Pokemon) {
+        viewModelScope.launch {
+            dataStoreManager.saveToDataStore(
+                UserPreferences(
+                    favPokemonId = favoritePokemon.id,
+                ),
+            )
+        }
+        _viewState.update { state ->
+            state.copy(
+                favPokemon = favoritePokemon,
+                favPokemonSelected = true,
+            )
         }
     }
 

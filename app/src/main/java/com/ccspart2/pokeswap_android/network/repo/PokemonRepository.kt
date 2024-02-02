@@ -1,6 +1,6 @@
 package com.ccspart2.pokeswap_android.network.repo
 
-import com.ccspart2.pokeswap_android.data.localData.PokemonDatabase
+import com.ccspart2.pokeswap_android.data.localData.room.PokemonDatabase
 import com.ccspart2.pokeswap_android.data.model.Pokemon
 import com.ccspart2.pokeswap_android.network.data.PokemonService
 import com.ccspart2.pokeswap_android.network.domain.item.PokemonResponseItem

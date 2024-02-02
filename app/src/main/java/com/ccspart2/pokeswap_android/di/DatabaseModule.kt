@@ -2,7 +2,8 @@ package com.ccspart2.pokeswap_android.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ccspart2.pokeswap_android.data.localData.PokemonDatabase
+import com.ccspart2.pokeswap_android.data.localData.dataStore.DataStoreManager
+import com.ccspart2.pokeswap_android.data.localData.room.PokemonDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +18,11 @@ object DatabaseModule {
     @Provides
     fun providesDB(@ApplicationContext context: Context): PokemonDatabase {
         return Room.databaseBuilder(context, PokemonDatabase::class.java, "Database").build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDataStore(@ApplicationContext context: Context): DataStoreManager {
+        return DataStoreManager(context)
     }
 }

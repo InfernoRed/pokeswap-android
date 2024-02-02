@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,18 +21,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ccspart2.pokeswap_android.R
 import com.ccspart2.pokeswap_android.presentation.core.ui.PreviewScreen
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.FilledButton
 import com.ccspart2.pokeswap_android.presentation.navigation.NavigationItem
+import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeState
+import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeViewModel
+import com.ccspart2.pokeswap_android.utils.LogUtils
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HomeRoute(
     navController: NavController,
 ) {
+    val viewModel: HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     HomeScreen(
+        viewModelState = viewModel.viewState,
         onCardLookupButtonClick = {
             Toast.makeText(context, "Card Lookup is under construction", Toast.LENGTH_LONG).show()
         },
@@ -46,10 +55,20 @@ fun HomeRoute(
 
 @Composable
 private fun HomeScreen(
+    viewModelState: StateFlow<HomeState>,
     onCardLookupButtonClick: () -> Unit,
     onMyDeckButtonClick: () -> Unit,
     onFavoriteButtonClick: () -> Unit,
 ) {
+    val viewState = viewModelState.collectAsState()
+
+    // TODO Eliminate when Favorite Pokemon Display is implemented
+    if (viewState.value.favoritePokemonId.isEmpty()) {
+        LogUtils.info("No Favorite Pokemon Selected")
+    } else {
+        LogUtils.info("The selected Favorite Pokemon is : ${viewState.value.favoritePokemonId}")
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -119,6 +138,9 @@ private fun HomeScreen(
 private fun HomeScreenPreview() {
     PreviewScreen {
         HomeScreen(
+            viewModelState = MutableStateFlow(
+                HomeState(),
+            ),
             onCardLookupButtonClick = {},
             onFavoriteButtonClick = {},
             onMyDeckButtonClick = {},

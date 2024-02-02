@@ -1,4 +1,4 @@
-package com.ccspart2.pokeswap_android.data.localData
+package com.ccspart2.pokeswap_android.data.localData.room
 
 import androidx.room.Dao
 import androidx.room.Insert

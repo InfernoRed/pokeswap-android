@@ -1,6 +1,6 @@
 package com.ccspart2.pokeswap_android.di
 
-import com.ccspart2.pokeswap_android.data.localData.PokemonDatabase
+import com.ccspart2.pokeswap_android.data.localData.room.PokemonDatabase
 import com.ccspart2.pokeswap_android.network.common.Constants
 import com.ccspart2.pokeswap_android.network.data.PokemonApi
 import com.ccspart2.pokeswap_android.network.data.PokemonService
