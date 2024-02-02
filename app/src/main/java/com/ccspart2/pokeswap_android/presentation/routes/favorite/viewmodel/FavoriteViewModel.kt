@@ -24,8 +24,20 @@ constructor(
     val viewState = _viewState.asStateFlow()
 
     init {
-
-        getAllPokemon()
+        viewModelScope.launch {
+            pokemonUseCase().collect { pokemonList ->
+                if (pokemonList.isNotEmpty()) {
+                    _viewState.update { state ->
+                        state.copy(
+                            pokemonList = pokemonList,
+                            leftDisplayedPokemon = pokemonList.random(),
+                            rightDisplayedPokemon = pokemonList.random(),
+                            isLoading = false,
+                        )
+                    }
+                }
+            }
+        }
     }
 
     fun handleEvent(event: FavoriteEvent) {
@@ -99,43 +111,5 @@ constructor(
     ): Pokemon {
         val filteredList = currentPokemonList.filter { it != otherPokemonDisplayed }
         return filteredList.random()
-    }
-
-    private fun getAllPokemon() {
-        viewModelScope.launch {
-            try {
-                pokemonUseCase.getLocalPokemonData().collect { pokemonLocalList ->
-                    if (pokemonLocalList.isEmpty()) {
-                        val pokemonNetworkList = pokemonUseCase()
-                        pokemonNetworkList?.data?.let {
-                            _viewState.update { state ->
-                                state.copy(
-                                    pokemonList = it,
-                                    leftDisplayedPokemon = it.random(),
-                                    rightDisplayedPokemon = it.random(),
-                                    pokemonCount = pokemonNetworkList.totalCount,
-                                    isLoading = false,
-                                )
-                            }
-                        }
-
-                        pokemonNetworkList?.data?.forEach {
-                            LogUtils.info(it.name)
-                        }
-                    } else {
-                        _viewState.update { state ->
-                            state.copy(
-                                pokemonList = pokemonLocalList,
-                                leftDisplayedPokemon = pokemonLocalList.random(),
-                                rightDisplayedPokemon = pokemonLocalList.random(),
-                                isLoading = false,
-                            )
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                LogUtils.error("App Connection Exception = ${e.message}")
-            }
-        }
     }
 }

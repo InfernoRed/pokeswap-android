@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import com.ccspart2.pokeswap_android.R
 import com.ccspart2.pokeswap_android.presentation.core.ui.PreviewScreen
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.FilledButton
+import com.ccspart2.pokeswap_android.presentation.core.ui.components.LoadingDialog
 import com.ccspart2.pokeswap_android.presentation.navigation.NavigationItem
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeState
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeViewModel
@@ -60,13 +62,13 @@ private fun HomeScreen(
     onMyDeckButtonClick: () -> Unit,
     onFavoriteButtonClick: () -> Unit,
 ) {
-    val viewState = viewModelState.collectAsState()
+    val viewState by viewModelState.collectAsState()
 
     // TODO Eliminate when Favorite Pokemon Display is implemented
-    if (viewState.value.favoritePokemonId.isEmpty()) {
+    if (viewState.favoritePokemonId.isEmpty()) {
         LogUtils.info("No Favorite Pokemon Selected")
     } else {
-        LogUtils.info("The selected Favorite Pokemon is : ${viewState.value.favoritePokemonId}")
+        LogUtils.info("The selected Favorite Pokemon is : ${viewState.favoritePokemonId}")
     }
 
     Column(
@@ -77,57 +79,68 @@ private fun HomeScreen(
             .background(MaterialTheme.colorScheme.primary)
             .padding(bottom = 100.dp),
     ) {
-        Image(
-            painter = painterResource(
-                id = R.drawable.pokeswap_logo,
-            ),
-            contentDescription = "PokeSwap Logo",
-            modifier = Modifier
-                .width(300.dp)
-                .height(200.dp),
-        )
+        if (viewState.isLoading) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                LoadingDialog()
+            }
+        } else {
+            Image(
+                painter = painterResource(
+                    id = R.drawable.pokeswap_logo,
+                ),
+                contentDescription = "PokeSwap Logo",
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(200.dp),
+            )
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 20.dp,
-                alignment = Alignment.CenterVertically,
-            ),
-            modifier = Modifier
-                .fillMaxWidth(),
-        ) {
-            FilledButton(
-                onClick = onCardLookupButtonClick,
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 20.dp,
+                    alignment = Alignment.CenterVertically,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(),
             ) {
-                Text(
-                    text = "Card Lookup",
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .width(140.dp),
-                )
-            }
-            FilledButton(
-                onClick = onMyDeckButtonClick,
-            ) {
-                Text(
-                    text = "My Deck",
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .width(140.dp),
-                )
-            }
-            FilledButton(
-                onClick = onFavoriteButtonClick,
-            ) {
-                Text(
-                    text = "Favorite Card",
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .width(140.dp),
-                )
+                FilledButton(
+                    onClick = onCardLookupButtonClick,
+                ) {
+                    Text(
+                        text = "Card Lookup",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(140.dp),
+                    )
+                }
+                FilledButton(
+                    onClick = onMyDeckButtonClick,
+                ) {
+                    Text(
+                        text = "My Deck",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(140.dp),
+                    )
+                }
+                FilledButton(
+                    onClick = onFavoriteButtonClick,
+                ) {
+                    Text(
+                        text = "Favorite Card",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(140.dp),
+                    )
+                }
             }
         }
     }
