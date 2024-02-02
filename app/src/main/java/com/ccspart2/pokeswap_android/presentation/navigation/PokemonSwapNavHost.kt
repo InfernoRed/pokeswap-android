@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ccspart2.pokeswap_android.presentation.routes.favorite.ui.FavoriteRoute
 import com.ccspart2.pokeswap_android.presentation.routes.home.ui.HomeRoute
 
 @Composable
@@ -15,7 +16,10 @@ fun PokemonSwapNavHost() {
         startDestination = NavigationItem.Home.route,
     ) {
         composable(route = NavigationItem.Home.route) {
-            HomeRoute()
+            HomeRoute(navController = navController)
+        }
+        composable(route = NavigationItem.Favorite.route) {
+            FavoriteRoute(navController = navController)
         }
     }
 }

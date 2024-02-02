@@ -1,8 +1,8 @@
-package com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel
+package com.ccspart2.pokeswap_android.presentation.routes.favorite.viewmodel
 
 import com.ccspart2.pokeswap_android.data.model.Pokemon
 
-data class HomeState(
+data class FavoriteState(
     val pokemonList: List<Pokemon> = listOf(),
     val leftDisplayedPokemon: Pokemon = Pokemon(),
     val rightDisplayedPokemon: Pokemon = Pokemon(),

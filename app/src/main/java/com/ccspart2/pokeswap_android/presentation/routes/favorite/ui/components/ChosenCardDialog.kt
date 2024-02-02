@@ -1,4 +1,4 @@
-package com.ccspart2.pokeswap_android.presentation.routes.home.ui.components
+package com.ccspart2.pokeswap_android.presentation.routes.favorite.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

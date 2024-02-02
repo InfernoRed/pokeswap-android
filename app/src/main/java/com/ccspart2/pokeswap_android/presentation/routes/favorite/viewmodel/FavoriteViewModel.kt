@@ -1,4 +1,4 @@
-package com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel
+package com.ccspart2.pokeswap_android.presentation.routes.favorite.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,11 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject
+class FavoriteViewModel @Inject
 constructor(
     private val pokemonUseCase: GetAllPokemonUseCase,
 ) : ViewModel() {
-    private val _viewState = MutableStateFlow(HomeState())
+    private val _viewState = MutableStateFlow(FavoriteState())
     val viewState = _viewState.asStateFlow()
 
     init {
@@ -25,10 +25,10 @@ constructor(
         getAllPokemon()
     }
 
-    fun handleEvent(event: HomeEvent) {
+    fun handleEvent(event: FavoriteEvent) {
         when (event) {
-            HomeEvent.RandomizeLeftCard -> updateLeftCard()
-            HomeEvent.RandomizeRightCard -> updateRightCard()
+            FavoriteEvent.RandomizeLeftCard -> updateLeftCard()
+            FavoriteEvent.RandomizeRightCard -> updateRightCard()
         }
     }
 
