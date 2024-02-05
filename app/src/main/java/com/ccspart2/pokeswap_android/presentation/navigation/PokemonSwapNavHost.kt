@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ccspart2.pokeswap_android.presentation.routes.favorite.ui.FavoriteRoute
 import com.ccspart2.pokeswap_android.presentation.routes.home.ui.HomeRoute
+import com.ccspart2.pokeswap_android.presentation.routes.lookup.ui.LookUpRoute
 
 @Composable
 fun PokemonSwapNavHost() {
@@ -20,6 +21,9 @@ fun PokemonSwapNavHost() {
         }
         composable(route = NavigationItem.Favorite.route) {
             FavoriteRoute(navController = navController)
+        }
+        composable(route = NavigationItem.Lookup.route) {
+            LookUpRoute(navController = navController)
         }
     }
 }

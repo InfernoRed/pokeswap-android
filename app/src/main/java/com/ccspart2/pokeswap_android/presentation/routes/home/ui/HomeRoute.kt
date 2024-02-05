@@ -46,7 +46,7 @@ fun HomeRoute(
     HomeScreen(
         viewModelState = viewModel.viewState,
         onCardLookupButtonClick = {
-            Toast.makeText(context, "Card Lookup is under construction", Toast.LENGTH_LONG).show()
+            navController.navigate(NavigationItem.Lookup.route)
         },
         onMyDeckButtonClick = {
             Toast.makeText(context, "My Deck is under construction", Toast.LENGTH_LONG).show()
