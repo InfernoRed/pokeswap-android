@@ -34,10 +34,16 @@ class HomeViewModel @Inject constructor(
             }
             launch {
                 dataStoreManager.getFromDataStore().collect { userPreferences ->
-                    _viewState.update { state ->
-                        state.copy(
-                            favoritePokemonId = userPreferences.favPokemonId,
-                        )
+                    if (userPreferences.favPokemonId.isNotEmpty()) {
+                        pokemonUseCase.findPokemonById(userPreferences.favPokemonId)
+                            .collect { favoritePokemon ->
+                                _viewState.update { state ->
+                                    state.copy(
+                                        favoritePokemonId = userPreferences.favPokemonId,
+                                        favoritePokemon = favoritePokemon,
+                                    )
+                                }
+                            }
                     }
                 }
             }

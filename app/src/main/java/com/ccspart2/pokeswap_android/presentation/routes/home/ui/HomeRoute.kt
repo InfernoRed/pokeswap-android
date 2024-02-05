@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,14 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.ccspart2.pokeswap_android.R
+import com.ccspart2.pokeswap_android.data.model.Pokemon
 import com.ccspart2.pokeswap_android.presentation.core.ui.PreviewScreen
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.FilledButton
 import com.ccspart2.pokeswap_android.presentation.core.ui.components.LoadingDialog
 import com.ccspart2.pokeswap_android.presentation.navigation.NavigationItem
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeState
 import com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel.HomeViewModel
-import com.ccspart2.pokeswap_android.utils.LogUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -63,13 +65,6 @@ private fun HomeScreen(
     onFavoriteButtonClick: () -> Unit,
 ) {
     val viewState by viewModelState.collectAsState()
-
-    // TODO Eliminate when Favorite Pokemon Display is implemented
-    if (viewState.favoritePokemonId.isEmpty()) {
-        LogUtils.info("No Favorite Pokemon Selected")
-    } else {
-        LogUtils.info("The selected Favorite Pokemon is : ${viewState.favoritePokemonId}")
-    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -134,13 +129,37 @@ private fun HomeScreen(
                     onClick = onFavoriteButtonClick,
                 ) {
                     Text(
-                        text = "Favorite Card",
+                        text = "Favorite Card Swap",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .width(140.dp),
                     )
                 }
+            }
+
+            if (viewState.favoritePokemon.id.isNotEmpty()) {
+                Text(
+                    text = "Current Favorite Card: ${viewState.favoritePokemon.name}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 45.dp),
+                )
+                Image(
+                    painter = rememberImagePainter(
+                        data = viewState.favoritePokemon.images?.large
+                            ?: R.drawable.pokemon_card_backside,
+                        builder = {
+                            placeholder(R.drawable.pokemon_card_backside)
+                            error(R.drawable.pokemon_card_backside)
+                        },
+                    ),
+                    contentDescription = "Coil Image",
+                    modifier = Modifier
+                        .padding(30.dp)
+                        .size(200.dp),
+                )
             }
         }
     }
@@ -152,7 +171,12 @@ private fun HomeScreenPreview() {
     PreviewScreen {
         HomeScreen(
             viewModelState = MutableStateFlow(
-                HomeState(),
+                HomeState(
+                    isLoading = false,
+                    favoritePokemon = Pokemon(
+                        id = "dp3-1",
+                    ),
+                ),
             ),
             onCardLookupButtonClick = {},
             onFavoriteButtonClick = {},

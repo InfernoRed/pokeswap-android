@@ -1,7 +1,7 @@
 package com.ccspart2.pokeswap_android.network.domain.item
 
+import com.ccspart2.pokeswap_android.data.model.AllPokemonResponse
 import com.ccspart2.pokeswap_android.data.model.Pokemon
-import com.ccspart2.pokeswap_android.data.model.PokemonResponse
 
 data class PokemonResponseItem(
     val count: Int = 0,
@@ -11,5 +11,5 @@ data class PokemonResponseItem(
     val totalCount: Int = 0,
 )
 
-fun PokemonResponse.toPokemonResponseItem() =
+fun AllPokemonResponse.toPokemonResponseItem() =
     PokemonResponseItem(count, data, page, pageSize, totalCount)
