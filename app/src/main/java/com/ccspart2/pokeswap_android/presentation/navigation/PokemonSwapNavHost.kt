@@ -23,7 +23,7 @@ fun PokemonSwapNavHost() {
             FavoriteRoute(navController = navController)
         }
         composable(route = NavigationItem.Lookup.route) {
-            LookUpRoute(navController = navController)
+            LookUpRoute()
         }
     }
 }

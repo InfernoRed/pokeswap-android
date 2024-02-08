@@ -12,6 +12,6 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(pokemon: MutableList<Pokemon>)
 
-    @Query("SELECT * FROM pokemon")
+    @Query("SELECT * FROM pokemon ORDER BY name")
     fun getAllPokemon(): Flow<MutableList<Pokemon>>
 }

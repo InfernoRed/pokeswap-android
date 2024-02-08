@@ -13,4 +13,13 @@ data class Pokemon(
     var flavorText: String = "",
     val evolvesFrom: String? = null,
     @Embedded val cardmarket: CardmarketInfo = CardmarketInfo(),
-)
+) {
+    fun doesMatchSearchQuery(query: String): Boolean {
+        val matchingCombinations = listOf(
+            name,
+        )
+        return matchingCombinations.all {
+            it.contains(query, ignoreCase = true)
+        }
+    }
+}
