@@ -16,3 +16,7 @@ enum class Screen {
     LOOKUP,
     CARD_DETAILS,
 }
+
+enum class NavigationArguments(val key: String) {
+    POKEMON_ID(key = "pokemonId"),
+}

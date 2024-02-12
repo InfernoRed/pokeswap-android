@@ -49,7 +49,7 @@ fun LookUpRoute(navController: NavHostController) {
             viewModel.handleEvent(LookUpEvent.OnSearchTextChange(it))
         },
         onPokemonItemTap = { pokemonId ->
-            navController.navigate("${NavigationItem.CardDetails.route}/{$pokemonId}")
+            navController.navigate("${NavigationItem.CardDetails.route}/$pokemonId")
         },
     )
 }

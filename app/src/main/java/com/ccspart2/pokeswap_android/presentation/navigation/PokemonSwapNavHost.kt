@@ -26,7 +26,7 @@ fun PokemonSwapNavHost() {
         composable(route = NavigationItem.Lookup.route) {
             LookUpRoute(navController = navController)
         }
-        composable(route = "${NavigationItem.CardDetails.route}/{pokemonId}") {
+        composable(route = "${NavigationItem.CardDetails.route}/{${NavigationArguments.POKEMON_ID.key}}") {
             CardDetailsRoute(navController = navController)
         }
     }
