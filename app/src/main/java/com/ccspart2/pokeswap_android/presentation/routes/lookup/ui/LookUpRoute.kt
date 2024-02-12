@@ -28,8 +28,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.ccspart2.pokeswap_android.R
 import com.ccspart2.pokeswap_android.data.model.Pokemon
+import com.ccspart2.pokeswap_android.presentation.navigation.NavigationItem
 import com.ccspart2.pokeswap_android.presentation.routes.lookup.ui.components.PokemonLazyColumnItem
 import com.ccspart2.pokeswap_android.presentation.routes.lookup.viewmodel.LookUpEvent
 import com.ccspart2.pokeswap_android.presentation.routes.lookup.viewmodel.LookUpViewModel
@@ -38,13 +40,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun LookUpRoute() {
+fun LookUpRoute(navController: NavHostController) {
     val viewModel: LookUpViewModel = hiltViewModel()
     LookupScreen(
         searchTextState = viewModel.searchText,
         pokemonState = viewModel.pokemonSearch,
         onSearchTextValueChange = {
             viewModel.handleEvent(LookUpEvent.OnSearchTextChange(it))
+        },
+        onPokemonItemTap = { pokemonId ->
+            navController.navigate("${NavigationItem.CardDetails.route}/{$pokemonId}")
         },
     )
 }
@@ -54,6 +59,7 @@ private fun LookupScreen(
     searchTextState: StateFlow<String>,
     pokemonState: StateFlow<List<Pokemon>>,
     onSearchTextValueChange: (String) -> Unit,
+    onPokemonItemTap: (String) -> Unit,
 ) {
     val searchText by searchTextState.collectAsState()
     val searchedPokemon by pokemonState.collectAsState()
@@ -103,6 +109,9 @@ private fun LookupScreen(
             items(searchedPokemon) { pokemon ->
                 PokemonLazyColumnItem(
                     pokemon = pokemon,
+                    onClick = {
+                        onPokemonItemTap(it)
+                    },
                 )
             }
         }
@@ -117,6 +126,7 @@ private fun LookupScreenPreview() {
             searchTextState = MutableStateFlow(""),
             pokemonState = MutableStateFlow(listOf()),
             onSearchTextValueChange = {},
+            onPokemonItemTap = {},
         )
     }
 }

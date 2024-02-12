@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ccspart2.pokeswap_android.presentation.routes.cardDetails.ui.CardDetailsRoute
 import com.ccspart2.pokeswap_android.presentation.routes.favorite.ui.FavoriteRoute
 import com.ccspart2.pokeswap_android.presentation.routes.home.ui.HomeRoute
 import com.ccspart2.pokeswap_android.presentation.routes.lookup.ui.LookUpRoute
@@ -23,7 +24,10 @@ fun PokemonSwapNavHost() {
             FavoriteRoute(navController = navController)
         }
         composable(route = NavigationItem.Lookup.route) {
-            LookUpRoute()
+            LookUpRoute(navController = navController)
+        }
+        composable(route = "${NavigationItem.CardDetails.route}/{pokemonId}") {
+            CardDetailsRoute(navController = navController)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.ccspart2.pokeswap_android.presentation.routes.lookup.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,11 +30,15 @@ import com.ccspart2.pokeswap_android.ui.theme.PokeSwapAndroidTheme
 @Composable
 fun PokemonLazyColumnItem(
     pokemon: Pokemon,
+    onClick: (String) -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary),
+            .background(MaterialTheme.colorScheme.primary)
+            .clickable {
+                onClick(pokemon.id)
+            },
     ) {
         Column {
             Row(
@@ -88,6 +93,7 @@ private fun PokemonLazyColumnItemPreview() {
             pokemon = Pokemon(
                 name = "Pikachu",
             ),
+            onClick = {},
         )
     }
 }
