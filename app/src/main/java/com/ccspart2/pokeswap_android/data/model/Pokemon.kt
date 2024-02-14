@@ -29,7 +29,7 @@ data class Pokemon(
     var number: String = "",
     var artist: String = "",
     @Ignore var nationalPokedexNumbers: MutableList<Int> = mutableListOf(),
-    @Ignore var tcgplayer: TcgPlayerInfo = TcgPlayerInfo(),
+    @Ignore var tcgplayer: TcgPlayerDetails = TcgPlayerDetails(),
 
 ) {
     fun doesMatchSearchQuery(query: String): Boolean {

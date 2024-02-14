@@ -1,14 +1,20 @@
 package com.ccspart2.pokeswap_android.data.model
 
-import com.squareup.moshi.Json
-
-data class TcgPlayerInfo(
+data class TcgPlayerDetails(
     var url: String = "",
     var updatedAt: String = "",
-    var prices: TcgPlayerPrices = TcgPlayerPrices(),
+    var prices: TcgPlayerPrices? = TcgPlayerPrices(),
 )
 
 data class TcgPlayerPrices(
-    @Json(name = "holofoil") var holoFoil: PriceInfo? = null,
-    @Json(name = "reverseHolofoil") var reverseHoloFoil: PriceInfo? = null,
+    var holofoil: PriceDetails? = PriceDetails(),
+    var reverseHolofoil: PriceDetails? = PriceDetails(),
+)
+
+data class PriceDetails(
+    var low: Double? = 0.0,
+    var mid: Double? = 0.0,
+    var high: Double? = 0.0,
+    var market: Double? = null,
+    var directLow: Double? = null,
 )
