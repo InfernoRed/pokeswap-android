@@ -1,10 +1,14 @@
 package com.ccspart2.pokeswap.di
 
 import com.ccspart2.pokeswap.data.localData.room.PokemonDatabase
+import com.ccspart2.pokeswap.network.api.currency.CurrencyExchangeRatesApi
+import com.ccspart2.pokeswap.network.api.currency.CurrencyExchangeRatesServices
 import com.ccspart2.pokeswap.network.api.pokemon.PokemonApi
 import com.ccspart2.pokeswap.network.api.pokemon.PokemonService
 import com.ccspart2.pokeswap.network.common.Constants
+import com.ccspart2.pokeswap.network.domain.CurrencyExchangeUseCase
 import com.ccspart2.pokeswap.network.domain.PokemonUseCase
+import com.ccspart2.pokeswap.network.repo.CurrencyExchangeRatesRepository
 import com.ccspart2.pokeswap.network.repo.PokemonRepository
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -13,6 +17,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -26,6 +31,7 @@ object RetrofitModule {
 
     @Provides
     @Singleton
+    @Named("Pokemon")
     fun provideRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.POKEMON_BASE_URL)
@@ -35,14 +41,36 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun providePokemonApi(retrofit: Retrofit): PokemonApi {
+    @Named("Currency")
+    fun provideCurrencyRetrofit(moshi: Moshi): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.EXCHANGE_RATE_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePokemonApi(@Named("Pokemon") retrofit: Retrofit): PokemonApi {
         return retrofit.create(PokemonApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCurrencyApi(@Named("Currency") retrofit: Retrofit): CurrencyExchangeRatesApi {
+        return retrofit.create(CurrencyExchangeRatesApi::class.java)
     }
 
     @Provides
     @Singleton
     fun providePokemonService(pokemonApi: PokemonApi): PokemonService {
         return PokemonService(pokemonApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCurrencyService(currencyExchangeRatesApi: CurrencyExchangeRatesApi): CurrencyExchangeRatesServices {
+        return CurrencyExchangeRatesServices(currencyExchangeRatesApi)
     }
 
     @Provides
@@ -56,7 +84,19 @@ object RetrofitModule {
 
     @Provides
     @Singleton
+    fun provideCurrencyRepository(currencyExchangeRatesServices: CurrencyExchangeRatesServices): CurrencyExchangeRatesRepository {
+        return CurrencyExchangeRatesRepository(currencyExchangeRatesServices)
+    }
+
+    @Provides
+    @Singleton
     fun providePokemonUseCase(pokemonRepository: PokemonRepository): PokemonUseCase {
         return PokemonUseCase(pokemonRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCurrencyUseCase(currencyExchangeRatesRepository: CurrencyExchangeRatesRepository): CurrencyExchangeUseCase {
+        return CurrencyExchangeUseCase(currencyExchangeRatesRepository)
     }
 }
