@@ -4,33 +4,35 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "pokemon")
+@JsonClass(generateAdapter = true)
 data class Pokemon(
-    @PrimaryKey var id: String = "",
-    @Embedded var images: Images? = null,
-    var name: String = "",
-    var rarity: String = "",
-    var flavorText: String = "",
-    var evolvesFrom: String? = null,
-    @Embedded var cardmarket: CardmarketInfo = CardmarketInfo(),
-    var supertype: String = "",
-    @Ignore var types: List<String> = listOf(),
-    @Ignore var subtypes: List<String> = listOf(),
-    var level: String = "",
-    var hp: String = "",
-    @Ignore var abilities: List<Ability> = listOf(),
-    @Ignore var attacks: List<Attack> = listOf(),
-    @Ignore var weaknesses: MutableList<Weakness> = mutableListOf(),
-    @Ignore var resistances: MutableList<Resistance> = mutableListOf(),
-    @Ignore var retreatCost: MutableList<String> = mutableListOf(),
-    var convertedRetreatCost: Int = 0,
-    @Ignore var set: SetInfo = SetInfo(),
-    var number: String = "",
-    var artist: String = "",
-    @Ignore var nationalPokedexNumbers: MutableList<Int> = mutableListOf(),
-    @Ignore var tcgplayer: TcgPlayerDetails = TcgPlayerDetails(),
-
+    @field:Json(name = "id") @PrimaryKey var id: String = "",
+    @field:Json(name = "images") @Embedded var images: Images? = null,
+    @field:Json(name = "name") var name: String = "",
+    @field:Json(name = "rarity") var rarity: String = "",
+    @field:Json(name = "flavorText") var flavorText: String = "",
+    @field:Json(name = "evolvesFrom") var evolvesFrom: String? = null,
+    @field:Json(name = "cardmarket") @Embedded var cardmarket: Cardmarket = Cardmarket(),
+    @field:Json(name = "supertype") var supertype: String = "",
+    @field:Json(name = "types") @Ignore var types: List<String> = listOf(),
+    @field:Json(name = "subtypes") @Ignore var subtypes: List<String> = listOf(),
+    @field:Json(name = "level") var level: String = "",
+    @field:Json(name = "hp") var hp: String = "",
+    @field:Json(name = "abilities") @Ignore var abilities: List<Ability> = listOf(),
+    @field:Json(name = "attacks") @Ignore var attacks: List<Attack> = listOf(),
+    @field:Json(name = "weaknesses") @Ignore var weaknesses: MutableList<Weaknesse> = mutableListOf(),
+    @field:Json(name = "resistances") @Ignore var resistances: MutableList<Resistance> = mutableListOf(),
+    @field:Json(name = "retreatCost") @Ignore var retreatCost: MutableList<String> = mutableListOf(),
+    @field:Json(name = "convertedRetreatCost") var convertedRetreatCost: Int = 0,
+    @field:Json(name = "set") @Ignore var set: Set = Set(),
+    @field:Json(name = "number") var number: String = "",
+    @field:Json(name = "artist") var artist: String = "",
+    @field:Json(name = "nationalPokedexNumbers") @Ignore var nationalPokedexNumbers: MutableList<Int> = mutableListOf(),
+    @field:Json(name = "tcgplayer") @Ignore var tcgplayer: Tcgplayer = Tcgplayer(),
 ) {
     fun doesMatchSearchQuery(query: String): Boolean {
         val matchingCombinations = listOf(

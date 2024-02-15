@@ -55,6 +55,7 @@ dependencies {
 
     val room_version = "2.6.1"
     val coroutines_version = "1.7.3"
+    val moshiVersion = "1.15.0"
 
     // Coil
     implementation("io.coil-kt:coil-compose:1.4.0")
@@ -74,6 +75,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     // Moshi
+    implementation("com.squareup.moshi:moshi:$moshiVersion")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     // Coil
