@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ccspart2.pokeswap_android"
+    namespace = "com.ccspart2.pokeswap"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ccspart2.pokeswap_android"
+        applicationId = "com.ccspart2.pokeswap"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
