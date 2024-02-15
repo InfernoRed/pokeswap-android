@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ccspart2.pokeswap_android.data.model.Pokemon
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
 import kotlinx.coroutines.flow.Flow
 
 @Dao

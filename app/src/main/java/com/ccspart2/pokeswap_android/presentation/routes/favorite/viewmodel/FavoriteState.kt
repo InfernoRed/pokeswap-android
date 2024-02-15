@@ -1,6 +1,6 @@
 package com.ccspart2.pokeswap_android.presentation.routes.favorite.viewmodel
 
-import com.ccspart2.pokeswap_android.data.model.Pokemon
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
 
 data class FavoriteState(
     val pokemonList: List<Pokemon> = listOf(),

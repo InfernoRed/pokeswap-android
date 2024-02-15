@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ccspart2.pokeswap_android.R
-import com.ccspart2.pokeswap_android.data.model.Pokemon
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
 import com.ccspart2.pokeswap_android.presentation.navigation.NavigationItem
 import com.ccspart2.pokeswap_android.presentation.routes.lookup.ui.components.PokemonLazyColumnItem
 import com.ccspart2.pokeswap_android.presentation.routes.lookup.viewmodel.LookUpEvent

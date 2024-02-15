@@ -2,8 +2,8 @@ package com.ccspart2.pokeswap_android.presentation.routes.lookup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ccspart2.pokeswap_android.data.model.Pokemon
-import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
+import com.ccspart2.pokeswap_android.network.domain.PokemonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LookUpViewModel @Inject constructor(
-    private val pokemonUseCase: GetAllPokemonUseCase,
+    private val pokemonUseCase: PokemonUseCase,
 ) : ViewModel() {
 
     private val _searchText = MutableStateFlow("")

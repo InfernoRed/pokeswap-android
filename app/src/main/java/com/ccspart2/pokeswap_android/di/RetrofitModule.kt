@@ -1,10 +1,10 @@
 package com.ccspart2.pokeswap_android.di
 
 import com.ccspart2.pokeswap_android.data.localData.room.PokemonDatabase
+import com.ccspart2.pokeswap_android.network.api.pokemon.PokemonApi
+import com.ccspart2.pokeswap_android.network.api.pokemon.PokemonService
 import com.ccspart2.pokeswap_android.network.common.Constants
-import com.ccspart2.pokeswap_android.network.data.PokemonApi
-import com.ccspart2.pokeswap_android.network.data.PokemonService
-import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
+import com.ccspart2.pokeswap_android.network.domain.PokemonUseCase
 import com.ccspart2.pokeswap_android.network.repo.PokemonRepository
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ object RetrofitModule {
     @ViewModelScoped
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Constants.POKEMON_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
@@ -49,7 +49,7 @@ object RetrofitModule {
 
     @Provides
     @ViewModelScoped
-    fun providePokemonUseCase(pokemonRepository: PokemonRepository): GetAllPokemonUseCase {
-        return GetAllPokemonUseCase(pokemonRepository)
+    fun providePokemonUseCase(pokemonRepository: PokemonRepository): PokemonUseCase {
+        return PokemonUseCase(pokemonRepository)
     }
 }

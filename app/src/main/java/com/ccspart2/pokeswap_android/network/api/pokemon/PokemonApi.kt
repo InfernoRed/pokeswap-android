@@ -1,7 +1,7 @@
-package com.ccspart2.pokeswap_android.network.data
+package com.ccspart2.pokeswap_android.network.api.pokemon
 
-import com.ccspart2.pokeswap_android.data.model.AllPokemonResponse
-import com.ccspart2.pokeswap_android.data.model.PokemonResponse
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.AllPokemonResponse
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.PokemonResponse
 import com.ccspart2.pokeswap_android.network.common.Constants
 import retrofit2.Response
 import retrofit2.http.GET

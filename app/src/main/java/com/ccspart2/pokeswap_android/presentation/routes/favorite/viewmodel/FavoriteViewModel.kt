@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ccspart2.pokeswap_android.data.localData.dataStore.DataStoreManager
 import com.ccspart2.pokeswap_android.data.localData.dataStore.UserPreferences
-import com.ccspart2.pokeswap_android.data.model.Pokemon
-import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
+import com.ccspart2.pokeswap_android.network.domain.PokemonUseCase
 import com.ccspart2.pokeswap_android.utils.LogUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject
 constructor(
-    private val pokemonUseCase: GetAllPokemonUseCase,
+    private val pokemonUseCase: PokemonUseCase,
     private val dataStoreManager: DataStoreManager,
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(FavoriteState())

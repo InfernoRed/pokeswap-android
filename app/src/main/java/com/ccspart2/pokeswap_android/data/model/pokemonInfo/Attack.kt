@@ -1,4 +1,4 @@
-package com.ccspart2.pokeswap_android.data.model
+package com.ccspart2.pokeswap_android.data.model.pokemonInfo
 
 data class Attack(
     var name: String = "",

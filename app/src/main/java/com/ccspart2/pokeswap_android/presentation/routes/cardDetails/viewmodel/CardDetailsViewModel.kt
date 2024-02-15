@@ -3,7 +3,7 @@ package com.ccspart2.pokeswap_android.presentation.routes.cardDetails.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
+import com.ccspart2.pokeswap_android.network.domain.PokemonUseCase
 import com.ccspart2.pokeswap_android.presentation.navigation.NavigationArguments
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class CardDetailsViewModel @Inject
 constructor(
     savedStateHandle: SavedStateHandle,
-    private val pokemonUseCase: GetAllPokemonUseCase,
+    private val pokemonUseCase: PokemonUseCase,
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(CardDetailsState())

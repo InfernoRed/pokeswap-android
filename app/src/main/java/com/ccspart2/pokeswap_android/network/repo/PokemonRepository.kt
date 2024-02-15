@@ -1,8 +1,8 @@
 package com.ccspart2.pokeswap_android.network.repo
 
 import com.ccspart2.pokeswap_android.data.localData.room.PokemonDatabase
-import com.ccspart2.pokeswap_android.data.model.Pokemon
-import com.ccspart2.pokeswap_android.network.data.PokemonService
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
+import com.ccspart2.pokeswap_android.network.api.pokemon.PokemonService
 import com.ccspart2.pokeswap_android.utils.LogUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

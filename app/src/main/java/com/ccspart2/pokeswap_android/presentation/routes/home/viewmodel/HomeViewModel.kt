@@ -3,7 +3,7 @@ package com.ccspart2.pokeswap_android.presentation.routes.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ccspart2.pokeswap_android.data.localData.dataStore.DataStoreManager
-import com.ccspart2.pokeswap_android.network.domain.GetAllPokemonUseCase
+import com.ccspart2.pokeswap_android.network.domain.PokemonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager,
-    private val pokemonUseCase: GetAllPokemonUseCase,
+    private val pokemonUseCase: PokemonUseCase,
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(HomeState())
     val viewState = _viewState.asStateFlow()

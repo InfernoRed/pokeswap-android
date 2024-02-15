@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.ccspart2.pokeswap_android.R
-import com.ccspart2.pokeswap_android.data.model.Pokemon
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
 import com.ccspart2.pokeswap_android.ui.theme.PokeSwapAndroidTheme
 
 @Composable

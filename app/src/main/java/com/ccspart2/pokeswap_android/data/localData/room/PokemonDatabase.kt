@@ -2,7 +2,7 @@ package com.ccspart2.pokeswap_android.data.localData.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.ccspart2.pokeswap_android.data.model.Pokemon
+import com.ccspart2.pokeswap_android.data.model.pokemonInfo.Pokemon
 
 @Database(
     entities = [Pokemon::class],
