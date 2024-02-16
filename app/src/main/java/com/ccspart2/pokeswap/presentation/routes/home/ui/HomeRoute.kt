@@ -74,7 +74,7 @@ private fun HomeScreen(
             .background(MaterialTheme.colorScheme.primary)
             .padding(bottom = 100.dp),
     ) {
-        if (viewState.isLoading) {
+        if (viewState.isPokemonLoading || viewState.isCurrencyLoading) {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -172,7 +172,8 @@ private fun HomeScreenPreview() {
         HomeScreen(
             viewModelState = MutableStateFlow(
                 HomeState(
-                    isLoading = false,
+                    isCurrencyLoading = false,
+                    isPokemonLoading = false,
                     favoritePokemon = Pokemon(
                         id = "dp3-1",
                     ),

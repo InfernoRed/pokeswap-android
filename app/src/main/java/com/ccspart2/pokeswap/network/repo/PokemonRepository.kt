@@ -18,13 +18,13 @@ constructor(
 ) {
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun getAllPokemonData(): Flow<MutableList<Pokemon>> {
-        return db.getDao().getAllPokemon()
+        return db.getPokemonDao().getAllPokemon()
             .flatMapLatest { localPokemonList ->
                 if (localPokemonList.isEmpty()) {
                     val response = pokemonService.getAllPokemon()
 
                     response?.data?.let { pokemonList ->
-                        db.getDao().insertAll(pokemonList.toMutableList())
+                        db.getPokemonDao().insertAll(pokemonList.toMutableList())
                         return@let flowOf(pokemonList.toMutableList())
                     }
                 }

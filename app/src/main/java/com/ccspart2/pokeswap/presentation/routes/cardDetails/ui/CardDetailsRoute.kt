@@ -126,24 +126,24 @@ private fun CardDetailsScreen(
                     CardDetailsSectionHeader(headerLabel = "TCG Player")
                     CardDetailsSectionItem(
                         sectionLabel = "Holofoil",
-                        valueLabel = "${viewState.selectedPokemon.tcgplayer.prices?.holofoil?.market ?: 0.00}",
+                        valueLabel = viewState.holoPrice,
                     )
                     CardDetailsSectionItem(
                         sectionLabel = "Reverse Holofoil",
-                        valueLabel = "${viewState.selectedPokemon.tcgplayer.prices?.reverseHolofoil?.market ?: 0.00}",
+                        valueLabel = viewState.reverseHoloPrice,
                     )
                     CardDetailsSectionHeader(headerLabel = "Cardmarket")
                     CardDetailsSectionItem(
                         sectionLabel = "Trend",
-                        valueLabel = "${viewState.selectedPokemon.cardmarket.prices.trendPrice}",
+                        valueLabel = viewState.trendPrice,
                     )
                     CardDetailsSectionItem(
                         sectionLabel = "Holofoil Avg 30 days",
-                        valueLabel = "${viewState.selectedPokemon.cardmarket.prices.avg30}",
+                        valueLabel = viewState.avg30Price,
                     )
                     CardDetailsSectionItem(
                         sectionLabel = "Reverse Holofoil Avg 30 days",
-                        valueLabel = "${viewState.selectedPokemon.cardmarket.prices.reverseHoloAvg30}",
+                        valueLabel = viewState.reverseHoloAvg30Price,
                     )
                 }
             }

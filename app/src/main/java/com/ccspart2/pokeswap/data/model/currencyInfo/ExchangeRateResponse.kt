@@ -1,13 +1,20 @@
 package com.ccspart2.pokeswap.data.model.currencyInfo
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity(tableName = "currencyRate")
 @JsonClass(generateAdapter = true)
 data class ExchangeRateResponse(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @Json(name = "base_code")
     val baseCode: String = "",
     @Json(name = "conversion_rates")
+    @Embedded
     val conversionRates: ConversionRates = ConversionRates(),
     @Json(name = "documentation")
     val documentation: String = "",

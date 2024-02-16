@@ -84,8 +84,11 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideCurrencyRepository(currencyExchangeRatesServices: CurrencyExchangeRatesServices): CurrencyExchangeRatesRepository {
-        return CurrencyExchangeRatesRepository(currencyExchangeRatesServices)
+    fun provideCurrencyRepository(
+        currencyExchangeRatesServices: CurrencyExchangeRatesServices,
+        db: PokemonDatabase,
+    ): CurrencyExchangeRatesRepository {
+        return CurrencyExchangeRatesRepository(currencyExchangeRatesServices, db)
     }
 
     @Provides

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ccspart2.pokeswap.data.localData.dataStore.DataStoreManager
 import com.ccspart2.pokeswap.network.domain.CurrencyExchangeUseCase
 import com.ccspart2.pokeswap.network.domain.PokemonUseCase
-import com.ccspart2.pokeswap.utils.LogUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,15 +28,23 @@ class HomeViewModel @Inject constructor(
                     if (pokemonList.isNotEmpty()) {
                         _viewState.update { state ->
                             state.copy(
-                                isLoading = false,
+                                isPokemonLoading = false,
                             )
                         }
                     }
                 }
             }
             launch {
-                currencyExchangeUseCase().collect { conversionRates ->
-                    LogUtils.info(conversionRates.toString())
+                currencyExchangeUseCase().collect {
+                    it?.let { response ->
+                        if (response.result == "success") {
+                            _viewState.update { state ->
+                                state.copy(
+                                    isCurrencyLoading = false,
+                                )
+                            }
+                        }
+                    }
                 }
             }
             launch {

@@ -4,6 +4,7 @@ import com.ccspart2.pokeswap.data.model.pokemonInfo.Pokemon
 
 data class HomeState(
     val favoritePokemonId: String = "",
-    val isLoading: Boolean = true,
-    val favoritePokemon: Pokemon = Pokemon()
+    val isCurrencyLoading: Boolean = true,
+    val isPokemonLoading: Boolean = true,
+    val favoritePokemon: Pokemon = Pokemon(),
 )

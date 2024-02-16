@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ccspart2.pokeswap.network.domain.PokemonUseCase
 import com.ccspart2.pokeswap.presentation.navigation.NavigationArguments
+import com.ccspart2.pokeswap.utils.CurrencyUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,7 @@ class CardDetailsViewModel @Inject
 constructor(
     savedStateHandle: SavedStateHandle,
     private val pokemonUseCase: PokemonUseCase,
+    private val currencyUtils: CurrencyUtils,
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(CardDetailsState())
@@ -31,6 +33,12 @@ constructor(
                         state.copy(
                             selectedPokemon = selectedPokemon,
                             isLoading = false,
+                            holoPrice = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.tcgplayer.prices?.holofoil?.market ?: 0.00),
+                            reverseHoloPrice = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.tcgplayer.prices?.reverseHolofoil?.market ?: 0.00),
+                            trendPrice = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.cardmarket.prices.trendPrice),
+                            avg30Price = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.cardmarket.prices.avg30),
+                            reverseHoloAvg30Price = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.cardmarket.prices.reverseHoloAvg30),
+
                         )
                     }
                 }

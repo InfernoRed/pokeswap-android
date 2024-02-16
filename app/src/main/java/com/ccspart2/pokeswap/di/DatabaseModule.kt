@@ -17,7 +17,11 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun providesDB(@ApplicationContext context: Context): PokemonDatabase {
-        return Room.databaseBuilder(context, PokemonDatabase::class.java, "Database").build()
+        return Room
+            .databaseBuilder(context, PokemonDatabase::class.java, "Database")
+            .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .build()
     }
 
     @Singleton
