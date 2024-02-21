@@ -4,6 +4,7 @@ import com.ccspart2.pokeswap.data.localData.room.PokemonDatabase
 import com.ccspart2.pokeswap.network.api.currency.CurrencyExchangeRatesApi
 import com.ccspart2.pokeswap.network.api.currency.CurrencyExchangeRatesServices
 import com.ccspart2.pokeswap.network.api.pokemon.PokemonApi
+import com.ccspart2.pokeswap.network.api.pokemon.PokemonInterceptor
 import com.ccspart2.pokeswap.network.api.pokemon.PokemonService
 import com.ccspart2.pokeswap.network.common.Constants
 import com.ccspart2.pokeswap.network.domain.CurrencyExchangeUseCase
@@ -15,6 +16,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
@@ -23,6 +25,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
+
+    private val pokemonClient = OkHttpClient.Builder().apply {
+        addInterceptor(PokemonInterceptor())
+    }.build()
+
     @Provides
     @Singleton
     fun providesMoshi(): Moshi {
@@ -32,9 +39,10 @@ object RetrofitModule {
     @Provides
     @Singleton
     @Named("Pokemon")
-    fun provideRetrofit(moshi: Moshi): Retrofit {
+    fun providePokemonRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.POKEMON_BASE_URL)
+            .client(pokemonClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
