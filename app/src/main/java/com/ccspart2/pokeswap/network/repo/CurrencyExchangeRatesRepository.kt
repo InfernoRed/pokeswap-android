@@ -17,10 +17,14 @@ class CurrencyExchangeRatesRepository @Inject constructor(
 ) {
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun getAllExchangeRates(): Flow<ExchangeRateResponse?> {
-        return db.getExchangeDao().getAllRatesFlow().flatMapLatest { localRates ->
+        return db.getExchangeDao().getRatesFlow().flatMapLatest { localRates ->
             if (localRates.isEmpty() || !DateUtils.isDateWithin24Hours(localRates.first().timeLastUpdateUtc)) {
                 service.getAllExchangeRates()?.let { response ->
-                    db.getExchangeDao().insertAll(mutableListOf(response))
+                    db.getExchangeDao().insert(
+                        response.copy(
+                            id = 1,
+                        ),
+                    )
                     flowOf(response)
                 } ?: flowOf(null)
             } else {
@@ -30,6 +34,6 @@ class CurrencyExchangeRatesRepository @Inject constructor(
     }
 
     fun getAllLocalExchangeRates(): ConversionRates {
-        return db.getExchangeDao().getAllRates().first().conversionRates
+        return db.getExchangeDao().getRates().first().conversionRates
     }
 }

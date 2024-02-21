@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExchangeRatesDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(rates: MutableList<ExchangeRateResponse>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(rates: ExchangeRateResponse)
 
     @Query("SELECT * FROM currencyRate")
-    fun getAllRatesFlow(): Flow<MutableList<ExchangeRateResponse>>
+    fun getRatesFlow(): Flow<MutableList<ExchangeRateResponse>>
 
     @Query("SELECT * FROM currencyRate")
-    fun getAllRates(): MutableList<ExchangeRateResponse>
+    fun getRates(): MutableList<ExchangeRateResponse>
 }
