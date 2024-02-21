@@ -54,6 +54,9 @@ fun HomeRoute(
         onFavoriteButtonClick = {
             navController.navigate(NavigationItem.Favorite.route)
         },
+        onSettingsButtonClick = {
+            navController.navigate(NavigationItem.Settings.route)
+        },
     )
 }
 
@@ -63,6 +66,7 @@ private fun HomeScreen(
     onCardLookupButtonClick: () -> Unit,
     onMyDeckButtonClick: () -> Unit,
     onFavoriteButtonClick: () -> Unit,
+    onSettingsButtonClick: () -> Unit,
 ) {
     val viewState by viewModelState.collectAsState()
 
@@ -71,8 +75,7 @@ private fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(bottom = 100.dp),
+            .background(MaterialTheme.colorScheme.primary),
     ) {
         if (viewState.isPokemonLoading || viewState.isCurrencyLoading) {
             Column(
@@ -136,31 +139,44 @@ private fun HomeScreen(
                             .width(140.dp),
                     )
                 }
+                FilledButton(
+                    onClick = onSettingsButtonClick,
+                ) {
+                    Text(
+                        text = "Settings",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(140.dp),
+                    )
+                }
             }
 
-            if (viewState.favoritePokemon.id.isNotEmpty()) {
-                Text(
-                    text = "Current Favorite Card: ${viewState.favoritePokemon.name}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(top = 45.dp),
-                )
-                Image(
-                    painter = rememberImagePainter(
-                        data = viewState.favoritePokemon.images?.large
-                            ?: R.drawable.pokemon_card_backside,
-                        builder = {
-                            placeholder(R.drawable.pokemon_card_backside)
-                            error(R.drawable.pokemon_card_backside)
-                        },
-                    ),
-                    contentDescription = "Coil Image",
-                    modifier = Modifier
-                        .padding(30.dp)
-                        .size(200.dp),
-                )
-            }
+            val favoriteCardLabel = viewState.favoritePokemon.id.takeIf { it.isNotEmpty() }
+                ?.let { "Current Favorite Card: ${viewState.favoritePokemon.name}" }
+                ?: "Choose a favorite Pokemon to Display it here!"
+
+            Text(
+                text = favoriteCardLabel,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(top = 45.dp),
+            )
+            Image(
+                painter = rememberImagePainter(
+                    data = viewState.favoritePokemon.images?.large
+                        ?: R.drawable.pokemon_card_backside,
+                    builder = {
+                        placeholder(R.drawable.pokemon_card_backside)
+                        error(R.drawable.pokemon_card_backside)
+                    },
+                ),
+                contentDescription = "Coil Image",
+                modifier = Modifier
+                    .padding(30.dp)
+                    .size(200.dp),
+            )
         }
     }
 }
@@ -174,14 +190,13 @@ private fun HomeScreenPreview() {
                 HomeState(
                     isCurrencyLoading = false,
                     isPokemonLoading = false,
-                    favoritePokemon = Pokemon(
-                        id = "dp3-1",
-                    ),
+                    favoritePokemon = Pokemon(),
                 ),
             ),
             onCardLookupButtonClick = {},
             onFavoriteButtonClick = {},
             onMyDeckButtonClick = {},
+            onSettingsButtonClick = {},
         )
     }
 }

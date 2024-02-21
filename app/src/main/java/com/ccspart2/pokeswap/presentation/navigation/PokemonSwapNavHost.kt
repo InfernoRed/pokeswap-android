@@ -8,6 +8,7 @@ import com.ccspart2.pokeswap.presentation.routes.cardDetails.ui.CardDetailsRoute
 import com.ccspart2.pokeswap.presentation.routes.favorite.ui.FavoriteRoute
 import com.ccspart2.pokeswap.presentation.routes.home.ui.HomeRoute
 import com.ccspart2.pokeswap.presentation.routes.lookup.ui.LookUpRoute
+import com.ccspart2.pokeswap.presentation.routes.settings.ui.SettingsRoute
 
 @Composable
 fun PokemonSwapNavHost() {
@@ -28,6 +29,9 @@ fun PokemonSwapNavHost() {
         }
         composable(route = "${NavigationItem.CardDetails.route}/{${NavigationArguments.POKEMON_ID.key}}") {
             CardDetailsRoute(navController = navController)
+        }
+        composable(route = NavigationItem.Settings.route) {
+            SettingsRoute(navController = navController)
         }
     }
 }

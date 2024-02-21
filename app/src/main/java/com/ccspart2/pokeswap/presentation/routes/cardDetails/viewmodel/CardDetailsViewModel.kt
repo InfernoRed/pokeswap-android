@@ -3,6 +3,7 @@ package com.ccspart2.pokeswap.presentation.routes.cardDetails.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ccspart2.pokeswap.data.localData.dataStore.DataStoreManager
 import com.ccspart2.pokeswap.network.domain.PokemonUseCase
 import com.ccspart2.pokeswap.presentation.navigation.NavigationArguments
 import com.ccspart2.pokeswap.utils.CurrencyUtils
@@ -19,6 +20,7 @@ constructor(
     savedStateHandle: SavedStateHandle,
     private val pokemonUseCase: PokemonUseCase,
     private val currencyUtils: CurrencyUtils,
+    private val dataStoreManager: DataStoreManager,
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(CardDetailsState())
@@ -29,17 +31,60 @@ constructor(
         if (argument.isNotEmpty()) {
             viewModelScope.launch {
                 pokemonUseCase.findPokemonById(argument).collect { selectedPokemon ->
-                    _viewState.update { state ->
-                        state.copy(
-                            selectedPokemon = selectedPokemon,
-                            isLoading = false,
-                            holoPrice = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.tcgplayer.prices?.holofoil?.market ?: 0.00),
-                            reverseHoloPrice = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.tcgplayer.prices?.reverseHolofoil?.market ?: 0.00),
-                            trendPrice = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.cardmarket.prices.trendPrice),
-                            avg30Price = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.cardmarket.prices.avg30),
-                            reverseHoloAvg30Price = currencyUtils.convertCurrencyFromEURtoUSD(selectedPokemon.cardmarket.prices.reverseHoloAvg30),
-
-                        )
+                    dataStoreManager.getSelectedCurrencyFromDataStore().collect { isEuro ->
+                        _viewState.update { state ->
+                            state.copy(
+                                selectedPokemon = selectedPokemon,
+                                isLoading = false,
+                                holoPrice = if (isEuro) {
+                                    currencyUtils.doubleToEuroString(
+                                        selectedPokemon.tcgplayer.prices?.holofoil?.market ?: 0.00,
+                                    )
+                                } else {
+                                    currencyUtils.convertCurrencyFromEURtoUSD(
+                                        selectedPokemon.tcgplayer.prices?.holofoil?.market ?: 0.00,
+                                    )
+                                },
+                                reverseHoloPrice = if (isEuro) {
+                                    currencyUtils.doubleToEuroString(
+                                        selectedPokemon.tcgplayer.prices?.reverseHolofoil?.market
+                                            ?: 0.00,
+                                    )
+                                } else {
+                                    currencyUtils.convertCurrencyFromEURtoUSD(
+                                        selectedPokemon.tcgplayer.prices?.reverseHolofoil?.market
+                                            ?: 0.00,
+                                    )
+                                },
+                                trendPrice = if (isEuro) {
+                                    currencyUtils.doubleToEuroString(
+                                        selectedPokemon.cardmarket.prices.trendPrice,
+                                    )
+                                } else {
+                                    currencyUtils.convertCurrencyFromEURtoUSD(
+                                        selectedPokemon.cardmarket.prices.trendPrice,
+                                    )
+                                },
+                                avg30Price = if (isEuro) {
+                                    currencyUtils.doubleToEuroString(
+                                        selectedPokemon.cardmarket.prices.avg30,
+                                    )
+                                } else {
+                                    currencyUtils.convertCurrencyFromEURtoUSD(
+                                        selectedPokemon.cardmarket.prices.avg30,
+                                    )
+                                },
+                                reverseHoloAvg30Price = if (isEuro) {
+                                    currencyUtils.doubleToEuroString(
+                                        selectedPokemon.cardmarket.prices.reverseHoloAvg30,
+                                    )
+                                } else {
+                                    currencyUtils.convertCurrencyFromEURtoUSD(
+                                        selectedPokemon.cardmarket.prices.reverseHoloAvg30,
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
             }

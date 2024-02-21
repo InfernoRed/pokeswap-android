@@ -48,13 +48,13 @@ class HomeViewModel @Inject constructor(
                 }
             }
             launch {
-                dataStoreManager.getFromDataStore().collect { userPreferences ->
-                    if (userPreferences.favPokemonId.isNotEmpty()) {
-                        pokemonUseCase.findPokemonById(userPreferences.favPokemonId)
+                dataStoreManager.getFavPokemonFromDataStore().collect { favoritePokemonId ->
+                    if (favoritePokemonId.isNotEmpty()) {
+                        pokemonUseCase.findPokemonById(favoritePokemonId)
                             .collect { favoritePokemon ->
                                 _viewState.update { state ->
                                     state.copy(
-                                        favoritePokemonId = userPreferences.favPokemonId,
+                                        favoritePokemonId = favoritePokemonId,
                                         favoritePokemon = favoritePokemon,
                                     )
                                 }

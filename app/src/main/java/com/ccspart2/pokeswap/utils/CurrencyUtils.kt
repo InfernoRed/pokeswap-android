@@ -21,4 +21,8 @@ class CurrencyUtils @Inject constructor(
         }
         return "$0.00"
     }
+    fun doubleToEuroString(amount: Double): String {
+        val euroSymbol = '\u20AC' // Unicode for Euro symbol
+        return String.format("%c%.2f", euroSymbol, amount)
+    }
 }

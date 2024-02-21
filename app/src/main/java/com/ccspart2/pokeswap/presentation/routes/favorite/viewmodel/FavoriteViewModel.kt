@@ -3,7 +3,6 @@ package com.ccspart2.pokeswap.presentation.routes.favorite.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ccspart2.pokeswap.data.localData.dataStore.DataStoreManager
-import com.ccspart2.pokeswap.data.localData.dataStore.UserPreferences
 import com.ccspart2.pokeswap.data.model.pokemonInfo.Pokemon
 import com.ccspart2.pokeswap.network.domain.PokemonUseCase
 import com.ccspart2.pokeswap.utils.LogUtils
@@ -91,10 +90,8 @@ constructor(
 
     private fun saveFavoritePokemonCard(favoritePokemon: Pokemon) {
         viewModelScope.launch {
-            dataStoreManager.saveToDataStore(
-                UserPreferences(
-                    favPokemonId = favoritePokemon.id,
-                ),
+            dataStoreManager.saveFavPokemonToDataStore(
+                favPokemonId = favoritePokemon.id,
             )
         }
         _viewState.update { state ->

@@ -2,12 +2,10 @@ package com.ccspart2.pokeswap.presentation.navigation
 
 sealed class NavigationItem(val route: String) {
     data object Favorite : NavigationItem(Screen.FAVORITE.name)
-
     data object Home : NavigationItem(Screen.HOME.name)
-
     data object Lookup : NavigationItem(Screen.LOOKUP.name)
-
     data object CardDetails : NavigationItem(Screen.CARD_DETAILS.name)
+    data object Settings : NavigationItem(Screen.SETTINGS.name)
 }
 
 enum class Screen {
@@ -15,6 +13,7 @@ enum class Screen {
     FAVORITE,
     LOOKUP,
     CARD_DETAILS,
+    SETTINGS,
 }
 
 enum class NavigationArguments(val key: String) {
