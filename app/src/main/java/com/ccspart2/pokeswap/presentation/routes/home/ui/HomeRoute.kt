@@ -1,10 +1,10 @@
 package com.ccspart2.pokeswap.presentation.routes.home.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +18,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,14 +41,10 @@ fun HomeRoute(
     navController: NavController,
 ) {
     val viewModel: HomeViewModel = hiltViewModel()
-    val context = LocalContext.current
     HomeScreen(
         viewModelState = viewModel.viewState,
         onCardLookupButtonClick = {
             navController.navigate(NavigationItem.Lookup.route)
-        },
-        onMyDeckButtonClick = {
-            Toast.makeText(context, "My Deck is under construction", Toast.LENGTH_LONG).show()
         },
         onFavoriteButtonClick = {
             navController.navigate(NavigationItem.Favorite.route)
@@ -64,7 +59,6 @@ fun HomeRoute(
 private fun HomeScreen(
     viewModelState: StateFlow<HomeState>,
     onCardLookupButtonClick: () -> Unit,
-    onMyDeckButtonClick: () -> Unit,
     onFavoriteButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
 ) {
@@ -118,17 +112,6 @@ private fun HomeScreen(
                     )
                 }
                 FilledButton(
-                    onClick = onMyDeckButtonClick,
-                ) {
-                    Text(
-                        text = "My Deck",
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .width(140.dp),
-                    )
-                }
-                FilledButton(
                     onClick = onFavoriteButtonClick,
                 ) {
                     Text(
@@ -151,6 +134,11 @@ private fun HomeScreen(
                     )
                 }
             }
+
+            Spacer(
+                modifier = Modifier
+                    .height(50.dp),
+            )
 
             val favoriteCardLabel = viewState.favoritePokemon.id.takeIf { it.isNotEmpty() }
                 ?.let { "Current Favorite Card: ${viewState.favoritePokemon.name}" }
@@ -195,7 +183,6 @@ private fun HomeScreenPreview() {
             ),
             onCardLookupButtonClick = {},
             onFavoriteButtonClick = {},
-            onMyDeckButtonClick = {},
             onSettingsButtonClick = {},
         )
     }
