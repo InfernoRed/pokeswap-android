@@ -1,4 +1,31 @@
 <resources>
     <string name="app_name">PokeSwap</string>
     <string name="loading_component_label">Loading</string>
+
+    <string name="coil_image_placeholder">Coil Image</string>
+
+    <string name="card_details_name_label">Name</string>
+    <string name="card_details_rarity_label">Rarity</string>
+    <string name="card_details_release_date_label">Release Date</string>
+    <string name="card_details_TCG_section_label">TCG Player</string>
+    <string name="card_details_holofoil_label">Holofoil</string>
+    <string name="card_details_reverse_holofoil_label">Reverse Holofoil</string>
+    <string name="card_details_card_market_section_label">CardMarket</string>
+    <string name="card_details_trend_label">Trend</string>
+    <string name="card_details_holofoil_30_avg_label">Holofoil Avg 30 days</string>
+    <string name="card_details_reverse_holofoil_30_avg_label">Reverse Holofoil Avg 30 days</string>
+
+    <string name="favorite_title">Choose your Favorite Pokemon</string>
+    <string name="favorite_left_button_label">Left</string>
+    <string name="favorite_right_button_label">Right</string>
+    
+    <string name="home_coil_image_logo_desc">PokeSwap Logo</string>
+    <string name="home_card_lookup_button_label">Card Lookup</string>
+    <string name="home_card_swap_button_label">Favorite Card Swap</string>
+    <string name="home_settings_button_label">Favorite Card Swap</string>
+    <string name="home_favorite_pokemon_label_placeholder">"Choose a favorite Pokemon to Display it here!"</string>
+
+    <string name="lookup_search_field_placeholder">Search for a Pokemon</string>
+
+    <string name="settings_currency_title">Choose the default currency</string>
 </resources>

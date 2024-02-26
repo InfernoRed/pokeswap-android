@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -83,7 +84,7 @@ private fun CardDetailsScreen(
                         error(R.drawable.pokemon_card_backside)
                     },
                 ),
-                contentDescription = "Coil Image",
+                contentDescription = stringResource(id = R.string.coil_image_placeholder),
                 modifier = Modifier
                     .size(300.dp),
             )
@@ -95,37 +96,41 @@ private fun CardDetailsScreen(
             ) {
                 item {
                     CardDetailsSectionItem(
-                        sectionLabel = "Name",
+                        sectionLabel = stringResource(id = R.string.card_details_name_label),
                         valueLabel = viewState.selectedPokemon.name,
                     )
                     CardDetailsSectionItem(
-                        sectionLabel = "Rarity",
+                        sectionLabel = stringResource(id = R.string.card_details_rarity_label),
                         valueLabel = viewState.selectedPokemon.rarity,
                     )
                     CardDetailsSectionItem(
-                        sectionLabel = "Release Date",
+                        sectionLabel = stringResource(id = R.string.card_details_release_date_label),
                         valueLabel = viewState.selectedPokemon.set.releaseDate,
                     )
-                    CardDetailsSectionHeader(headerLabel = "TCG Player")
+                    CardDetailsSectionHeader(
+                        headerLabel = stringResource(id = R.string.card_details_TCG_section_label),
+                    )
                     CardDetailsSectionItem(
-                        sectionLabel = "Holofoil",
+                        sectionLabel = stringResource(id = R.string.card_details_holofoil_label),
                         valueLabel = viewState.holoPrice,
                     )
                     CardDetailsSectionItem(
-                        sectionLabel = "Reverse Holofoil",
+                        sectionLabel = stringResource(id = R.string.card_details_reverse_holofoil_label),
                         valueLabel = viewState.reverseHoloPrice,
                     )
-                    CardDetailsSectionHeader(headerLabel = "Cardmarket")
+                    CardDetailsSectionHeader(
+                        headerLabel = stringResource(id = R.string.card_details_card_market_section_label),
+                    )
                     CardDetailsSectionItem(
-                        sectionLabel = "Trend",
+                        sectionLabel = stringResource(id = R.string.card_details_trend_label),
                         valueLabel = viewState.trendPrice,
                     )
                     CardDetailsSectionItem(
-                        sectionLabel = "Holofoil Avg 30 days",
+                        sectionLabel = stringResource(id = R.string.card_details_holofoil_30_avg_label),
                         valueLabel = viewState.avg30Price,
                     )
                     CardDetailsSectionItem(
-                        sectionLabel = "Reverse Holofoil Avg 30 days",
+                        sectionLabel = stringResource(id = R.string.card_details_reverse_holofoil_30_avg_label),
                         valueLabel = viewState.reverseHoloAvg30Price,
                     )
                 }

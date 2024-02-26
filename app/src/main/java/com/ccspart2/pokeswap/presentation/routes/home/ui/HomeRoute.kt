@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,7 @@ private fun HomeScreen(
                 painter = painterResource(
                     id = R.drawable.pokeswap_logo,
                 ),
-                contentDescription = "PokeSwap Logo",
+                contentDescription = stringResource(id = R.string.home_coil_image_logo_desc),
                 modifier = Modifier
                     .width(300.dp)
                     .height(200.dp),
@@ -104,7 +105,7 @@ private fun HomeScreen(
                     onClick = onCardLookupButtonClick,
                 ) {
                     Text(
-                        text = "Card Lookup",
+                        text = stringResource(id = R.string.home_card_lookup_button_label),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -115,7 +116,7 @@ private fun HomeScreen(
                     onClick = onFavoriteButtonClick,
                 ) {
                     Text(
-                        text = "Favorite Card Swap",
+                        text = stringResource(id = R.string.home_card_swap_button_label),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -126,7 +127,7 @@ private fun HomeScreen(
                     onClick = onSettingsButtonClick,
                 ) {
                     Text(
-                        text = "Settings",
+                        text = stringResource(id = R.string.home_settings_button_label),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -141,8 +142,10 @@ private fun HomeScreen(
             )
 
             val favoriteCardLabel = viewState.favoritePokemon.id.takeIf { it.isNotEmpty() }
-                ?.let { "Current Favorite Card: ${viewState.favoritePokemon.name}" }
-                ?: "Choose a favorite Pokemon to Display it here!"
+                ?.let {
+                    "Current Favorite Card: ${viewState.favoritePokemon.name}"
+                }
+                ?: stringResource(id = R.string.home_favorite_pokemon_label_placeholder)
 
             Text(
                 text = favoriteCardLabel,
@@ -160,7 +163,7 @@ private fun HomeScreen(
                         error(R.drawable.pokemon_card_backside)
                     },
                 ),
-                contentDescription = "Coil Image",
+                contentDescription = stringResource(id = R.string.coil_image_placeholder),
                 modifier = Modifier
                     .padding(30.dp)
                     .size(200.dp),
