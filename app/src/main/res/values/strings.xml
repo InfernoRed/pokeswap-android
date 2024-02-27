@@ -22,10 +22,11 @@
     <string name="home_coil_image_logo_desc">PokeSwap Logo</string>
     <string name="home_card_lookup_button_label">Card Lookup</string>
     <string name="home_card_swap_button_label">Favorite Card Swap</string>
-    <string name="home_settings_button_label">Favorite Card Swap</string>
+    <string name="home_settings_button_label">Settings</string>
     <string name="home_favorite_pokemon_label_placeholder">"Choose a favorite Pokemon to Display it here!"</string>
 
     <string name="lookup_search_field_placeholder">Search for a Pokemon</string>
 
     <string name="settings_currency_title">Choose the default currency</string>
+    <string name="settings_language_title">Choose a default language</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">PokeSwap</string>
     <string name="loading_component_label">Cargando</string>
 
     <string name="coil_image_placeholder">Imagen Coil</string>
@@ -28,4 +29,5 @@
     <string name="lookup_search_field_placeholder">Buscar un pokemon</string>
 
     <string name="settings_currency_title">Elija la moneda predeterminada</string>
+    <string name="settings_language_title">Elija un lenguaje predeterminado</string>
 </resources>

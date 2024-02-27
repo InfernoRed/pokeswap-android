@@ -58,6 +58,8 @@ dependencies {
     val coroutines_version = "1.7.3"
     val moshiVersion = "1.15.0"
 
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
     // Coil
     implementation("io.coil-kt:coil-compose:1.4.0")
 
