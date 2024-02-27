@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading_component_label">Cargando</string>
+
+    <string name="coil_image_placeholder">Imagen Coil</string>
+
+    <string name="card_details_name_label">Nombre</string>
+    <string name="card_details_rarity_label">Rareza</string>
+    <string name="card_details_release_date_label">Fecha de lanzamiento</string>
+    <string name="card_details_TCG_section_label">TCG Player</string>
+    <string name="card_details_holofoil_label">hollofil</string>
+    <string name="card_details_reverse_holofoil_label">hollofil inverso</string>
+    <string name="card_details_card_market_section_label">CardMarket</string>
+    <string name="card_details_trend_label">Tendencia</string>
+    <string name="card_details_holofoil_30_avg_label">hollofil Avg 30 días</string>
+    <string name="card_details_reverse_holofoil_30_avg_label">hollofil inverso Avg 30 días</string>
+
+    <string name="favorite_title">Escoge tu Pokemon Favorito</string>
+    <string name="favorite_left_button_label">Izquierda</string>
+    <string name="favorite_right_button_label">Derecha</string>
+
+    <string name="home_coil_image_logo_desc">Logo PokeSwap</string>
+    <string name="home_card_lookup_button_label">Búsqueda de tarjeta</string>
+    <string name="home_card_swap_button_label">Intercambio de tarjeta favorita</string>
+    <string name="home_settings_button_label">Ajustes</string>
+    <string name="home_favorite_pokemon_label_placeholder">¡Elige un Pokémon favorito para mostrarlo aquí!</string>
+
+    <string name="lookup_search_field_placeholder">Buscar un pokemon</string>
+
+    <string name="settings_currency_title">Elija la moneda predeterminada</string>
+</resources>
