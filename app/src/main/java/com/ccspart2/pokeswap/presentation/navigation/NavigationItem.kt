@@ -6,6 +6,7 @@ sealed class NavigationItem(val route: String) {
     data object Lookup : NavigationItem(Screen.LOOKUP.name)
     data object CardDetails : NavigationItem(Screen.CARD_DETAILS.name)
     data object Settings : NavigationItem(Screen.SETTINGS.name)
+    data object CameraAi : NavigationItem(Screen.CAMERA.name)
 }
 
 enum class Screen {
@@ -14,6 +15,7 @@ enum class Screen {
     LOOKUP,
     CARD_DETAILS,
     SETTINGS,
+    CAMERA,
 }
 
 enum class NavigationArguments(val key: String) {

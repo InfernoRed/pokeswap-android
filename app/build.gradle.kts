@@ -60,6 +60,8 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
 
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
+
     // Coil
     implementation("io.coil-kt:coil-compose:1.4.0")
 
@@ -102,6 +104,18 @@ dependencies {
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    dependencies {
+
+        // CameraX core library using the camera2 implementation
+        val cameraxVersion = "1.3.0-rc01"
+        implementation("androidx.camera:camera-core:$cameraxVersion")
+        implementation("androidx.camera:camera-camera2:$cameraxVersion")
+        implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+        implementation("androidx.camera:camera-video:$cameraxVersion")
+        implementation("androidx.camera:camera-view:$cameraxVersion")
+        implementation("androidx.camera:camera-extensions:$cameraxVersion")
+    }
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

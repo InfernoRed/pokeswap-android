@@ -53,6 +53,9 @@ fun HomeRoute(
         onSettingsButtonClick = {
             navController.navigate(NavigationItem.Settings.route)
         },
+        onCameraButtonClick = {
+            navController.navigate(NavigationItem.CameraAi.route)
+        },
     )
 }
 
@@ -62,6 +65,7 @@ private fun HomeScreen(
     onCardLookupButtonClick: () -> Unit,
     onFavoriteButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
+    onCameraButtonClick: () -> Unit,
 ) {
     val viewState by viewModelState.collectAsState()
 
@@ -134,6 +138,17 @@ private fun HomeScreen(
                             .width(140.dp),
                     )
                 }
+                FilledButton(
+                    onClick = onCameraButtonClick,
+                ) {
+                    Text(
+                        text = "Camera AI",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .width(140.dp),
+                    )
+                }
             }
 
             Spacer(
@@ -187,6 +202,7 @@ private fun HomeScreenPreview() {
             onCardLookupButtonClick = {},
             onFavoriteButtonClick = {},
             onSettingsButtonClick = {},
+            onCameraButtonClick = {},
         )
     }
 }
