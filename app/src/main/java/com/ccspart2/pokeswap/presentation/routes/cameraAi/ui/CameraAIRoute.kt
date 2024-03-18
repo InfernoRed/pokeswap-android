@@ -2,6 +2,7 @@ package com.ccspart2.pokeswap.presentation.routes.cameraAi.ui
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture.OnImageCapturedCallback
 import androidx.camera.core.ImageCaptureException
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ccspart2.pokeswap.presentation.core.ui.PreviewScreen
+import com.ccspart2.pokeswap.presentation.routes.cameraAi.ui.components.AiCardResponseDialog
 import com.ccspart2.pokeswap.presentation.routes.cameraAi.ui.components.CameraPreview
 import com.ccspart2.pokeswap.presentation.routes.cameraAi.viewModel.CameraAIEvent
 import com.ccspart2.pokeswap.presentation.routes.cameraAi.viewModel.CameraAIState
@@ -47,6 +49,9 @@ fun CameraAIRoute() {
         onTakePhoto = {
             viewModel.handleEvent(CameraAIEvent.OnTakePicture(it))
         },
+        onAiImageDialogDismiss = {
+            viewModel.handleEvent(CameraAIEvent.OnAiImageDialogDismiss)
+        },
     )
 }
 
@@ -54,6 +59,7 @@ fun CameraAIRoute() {
 private fun CameraAIScreen(
     stateFlow: StateFlow<CameraAIState>,
     onTakePhoto: (Bitmap) -> Unit,
+    onAiImageDialogDismiss: () -> Unit,
 ) {
     val viewState by stateFlow.collectAsState()
     val context = LocalContext.current
@@ -61,6 +67,15 @@ private fun CameraAIScreen(
         LifecycleCameraController(context).apply {
             setEnabledUseCases(CameraController.IMAGE_CAPTURE)
         }
+    }
+
+    if (viewState.showAiImageDialog) {
+        AiCardResponseDialog(
+            isLoading = viewState.isLoading,
+            onClose = onAiImageDialogDismiss,
+            photoBitmap = viewState.capturedBitmap,
+            response = viewState.aiResponse,
+        )
     }
 
     Box(
@@ -124,7 +139,22 @@ private fun takePhoto(
         object : OnImageCapturedCallback() {
             override fun onCaptureSuccess(image: ImageProxy) {
                 super.onCaptureSuccess(image)
-                onPhotoTaken(image.toBitmap())
+
+                val matrix = Matrix().apply {
+                    postRotate(image.imageInfo.rotationDegrees.toFloat())
+                }
+
+                val rotatedBitmap = Bitmap.createBitmap(
+                    /* source = */ image.toBitmap(),
+                    /* x = */ 0,
+                    /* y = */ 0,
+                    /* width = */ image.width,
+                    /* height = */ image.height,
+                    /* m = */ matrix,
+                    /* filter = */ false,
+                )
+
+                onPhotoTaken(rotatedBitmap)
             }
 
             override fun onError(exception: ImageCaptureException) {
@@ -144,6 +174,7 @@ private fun CameraAIPreview() {
                 CameraAIState(name = "CameraAI"),
             ),
             onTakePhoto = {},
+            onAiImageDialogDismiss = {},
         )
     }
 }
