@@ -1,6 +1,8 @@
 package com.ccspart2.pokeswap.di
 
 import com.ccspart2.pokeswap.data.localData.room.PokemonDatabase
+import com.ccspart2.pokeswap.network.api.ai.AzureOpenAiApi
+import com.ccspart2.pokeswap.network.api.ai.AzureOpenAiServices
 import com.ccspart2.pokeswap.network.api.currency.CurrencyExchangeRatesApi
 import com.ccspart2.pokeswap.network.api.currency.CurrencyExchangeRatesServices
 import com.ccspart2.pokeswap.network.api.pokemon.PokemonApi
@@ -9,6 +11,7 @@ import com.ccspart2.pokeswap.network.api.pokemon.PokemonService
 import com.ccspart2.pokeswap.network.common.Constants
 import com.ccspart2.pokeswap.network.domain.CurrencyExchangeUseCase
 import com.ccspart2.pokeswap.network.domain.PokemonUseCase
+import com.ccspart2.pokeswap.network.repo.AzureAiRepository
 import com.ccspart2.pokeswap.network.repo.CurrencyExchangeRatesRepository
 import com.ccspart2.pokeswap.network.repo.PokemonRepository
 import com.squareup.moshi.Moshi
@@ -59,6 +62,16 @@ object RetrofitModule {
 
     @Provides
     @Singleton
+    @Named("Azure")
+    fun provideAzureApiRetrofit(moshi: Moshi): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.AZURE_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun providePokemonApi(@Named("Pokemon") retrofit: Retrofit): PokemonApi {
         return retrofit.create(PokemonApi::class.java)
     }
@@ -71,6 +84,12 @@ object RetrofitModule {
 
     @Provides
     @Singleton
+    fun provideAzureApi(@Named("Azure") retrofit: Retrofit): AzureOpenAiApi {
+        return retrofit.create(AzureOpenAiApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun providePokemonService(pokemonApi: PokemonApi): PokemonService {
         return PokemonService(pokemonApi)
     }
@@ -79,6 +98,12 @@ object RetrofitModule {
     @Singleton
     fun provideCurrencyService(currencyExchangeRatesApi: CurrencyExchangeRatesApi): CurrencyExchangeRatesServices {
         return CurrencyExchangeRatesServices(currencyExchangeRatesApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAzureAiService(azureOpenAiApi: AzureOpenAiApi): AzureOpenAiServices {
+        return AzureOpenAiServices(azureOpenAiApi)
     }
 
     @Provides
@@ -97,6 +122,12 @@ object RetrofitModule {
         db: PokemonDatabase,
     ): CurrencyExchangeRatesRepository {
         return CurrencyExchangeRatesRepository(currencyExchangeRatesServices, db)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAzureAiRepository(azureOpenAiServices: AzureOpenAiServices): AzureAiRepository {
+        return AzureAiRepository(azureOpenAiServices)
     }
 
     @Provides

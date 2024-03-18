@@ -3,16 +3,25 @@ package com.ccspart2.pokeswap.presentation.routes.cameraAi.viewModel
 import android.graphics.Bitmap
 import android.util.Base64
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ccspart2.pokeswap.data.model.aIInfo.request.AzureAiRequest
+import com.ccspart2.pokeswap.data.model.aIInfo.request.Content
+import com.ccspart2.pokeswap.data.model.aIInfo.request.ImageUrl
+import com.ccspart2.pokeswap.data.model.aIInfo.request.Message
+import com.ccspart2.pokeswap.network.repo.AzureAiRepository
 import com.ccspart2.pokeswap.utils.LogUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
-class CameraAIViewModel @Inject constructor() : ViewModel() {
+class CameraAIViewModel @Inject constructor(
+    val azureAiRepository: AzureAiRepository,
+) : ViewModel() {
     private val _viewState = MutableStateFlow(CameraAIState())
     val viewState = _viewState.asStateFlow()
 
@@ -24,13 +33,50 @@ class CameraAIViewModel @Inject constructor() : ViewModel() {
 
     private fun onTakePhoto(bitmap: Bitmap) {
         val base64String = encodeImage(bitmap)
-        LogUtils.info("base == $base64String")
-
         _viewState.update { state ->
             state.copy(
                 capturedBitmap = bitmap,
                 base64BitMap = base64String ?: "",
             )
+        }
+
+        val azureAiRequest = AzureAiRequest(
+            maxTokens = 800,
+            messages = listOf(
+                Message(
+                    role = "system",
+                    content = listOf(
+                        Content(
+                            type = "text",
+                            text = "You are an AI assistant that helps people find information.",
+                        ),
+                    ),
+                ),
+                Message(
+                    role = "user",
+                    content = listOf(
+                        Content(
+                            type = "image_url",
+                            imageUrl = ImageUrl(
+                                url = "data:image/jpeg;base64,$base64String",
+                            ),
+                        ),
+                        Content(
+                            type = "text",
+                            text = "What is This?",
+                        ),
+                    ),
+                ),
+            ),
+            temperature = 0.5,
+            topP = 0.95,
+            stream = false,
+        )
+        viewModelScope.launch {
+            azureAiRepository.getCardAiInfo(azureAiRequest).collect { response ->
+                val lol = response
+                LogUtils.info(lol.toString(), tag = "Charlie Castro")
+            }
         }
     }
 
