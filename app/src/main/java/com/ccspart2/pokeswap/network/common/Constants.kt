@@ -11,7 +11,6 @@ class Constants {
 
         const val AZURE_BASE_URL = "https://irt-cardlabel-poc-west.openai.azure.com/openai/"
         const val AZURE_ENDPOINT = "deployments/PokeSwap/chat/completions"
-        const val AZURE_API_KEY = "e578b80bd5754fffb69574319d609c6f"
         const val AZURE_API_VERSION = "2024-02-15-preview"
     }
 }

@@ -9,7 +9,7 @@ class PokemonInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
             .newBuilder()
-            .addHeader("X-Api-Key", BuildConfig.apiKey)
+            .addHeader("X-Api-Key", BuildConfig.pokemonApiKey)
             .build()
         return chain.proceed(request)
     }
