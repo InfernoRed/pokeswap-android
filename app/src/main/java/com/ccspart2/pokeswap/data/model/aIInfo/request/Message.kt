@@ -35,7 +35,7 @@ data class Message(
                     ),
                     Content(
                         type = "text",
-                        text = "What is this?",
+                        text = "Tell me all the information you can gather from this card.",
                     ),
                 ),
             )

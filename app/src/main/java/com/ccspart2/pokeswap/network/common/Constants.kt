@@ -9,8 +9,8 @@ class Constants {
         const val EXCHANGE_RATE_ENDPOINT =
             "https://v6.exchangerate-api.com/v6/54264b06cb36f602b081c45f/latest/EUR/"
 
-        const val AZURE_BASE_URL = "https://irt-cardlabel-poc-west.openai.azure.com/openai/"
-        const val AZURE_ENDPOINT = "deployments/PokeSwap/chat/completions"
+        const val AZURE_BASE_URL = "https://irt-pokeswap.openai.azure.com/"
+        const val AZURE_ENDPOINT = "openai/deployments/pokeSwap/chat/completions"
         const val AZURE_API_VERSION = "2024-02-15-preview"
     }
 }
