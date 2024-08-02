@@ -35,7 +35,7 @@ fun PokemonSwapNavHost() {
             SettingsRoute(navController = navController)
         }
         composable(route = NavigationItem.CameraAi.route) {
-            CameraAIRoute()
+            CameraAIRoute(navController = navController)
         }
     }
 }
